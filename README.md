@@ -1,7 +1,7 @@
 # 
 
 This is a demo repository of BDD. The focus here is not the source code, but rather the functional tests written using Specflow.
-This is a forked repository from https://github.com/kgrzybek/modular-monolith-with-ddd.
+This is a forked repository from https://github.com/simplcommerce/SimplCommerce.
 The ReadMe has been trimmed leaving  "how to run" sections.
 
 ## About the original project
