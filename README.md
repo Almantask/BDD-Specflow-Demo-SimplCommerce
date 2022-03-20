@@ -18,7 +18,7 @@ For testing purpose only `docker run -p 5000:80 simplcommerce/ci-build`
 
 Continuous deployment: https://ci.simplcommerce.com
 
-## Visual Studio 2022 and SQL Server
+## Windows with SQL Server
 
 #### Prerequisites
 
@@ -27,7 +27,7 @@ Continuous deployment: https://ci.simplcommerce.com
 
 #### Steps to run
 
-- Update the connection string in appsettings.json in SimplCommerce.WebHost
+- Update the connection string in appsettings.json in SimplCommerce.WebHost (all you have to do is to change the server)
 - Build the whole solution.
 - In Solution Explorer, make sure that SimplCommerce.WebHost is selected as the Startup Project
 - Open the Package Manager Console Window and make sure that SimplCommerce.WebHost is selected as the Default project. Then type "Update-Database" then press "Enter". This action will create the database schema.
