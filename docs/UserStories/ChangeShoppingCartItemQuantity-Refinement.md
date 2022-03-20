@@ -2,7 +2,22 @@
 
 ## The purpose of this example
 
-[BDD (Behavior Driven Development)](https://cucumber.io/docs/bdd/#what-is-bdd) is a great way of working in an [Agile](https://agilemanifesto.org/) world.
+[BDD (Behavior Driven Development)](https://cucumber.io/docs/bdd/#what-is-bdd) is a great way of working in an [Agile](https://agilemanifesto.org/) world. Many people think they are doing BDD as soon as they start using test automation frameworks such as Gherkin or Cucumber, but that is far from true. There are 3 pillars of BDD:
+
+- Discovery - exploring requirements through examples
+- Formulation - creating scenarios (as documentation) out of examples. Feature files
+- Automation - verifying scenarios through automated tests (writing glue code)
+
+## Whom should be intested in this?
+
+The whole Agile Team should be interested, because:
+
+- **Product owner** will spend significantly less time answering questions during the sprint (because there simply won't be that many questions due to better refined stories)
+- **Tester** will not need to write so many test cases themselves, because they will be automated
+- **Developer** will waste less time implementing innacurate (or worse - wrong) requirements
+- **Developer and Tester** (and this is quite a key thing) will communicate with each other when defining scenarios.
+
+One common myth - testers should write scenarios. If you want to make 100% use of BDD - use scenario writing as an opportunity for a tester and developer to collaborate together. When scenarios are written, give a PO a shout and ask for a review.
 
 ## The evolution
 
