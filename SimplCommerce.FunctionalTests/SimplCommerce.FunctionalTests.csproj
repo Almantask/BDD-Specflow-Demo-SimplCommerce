@@ -17,9 +17,7 @@
 
   <ItemGroup>
     <Folder Include="Drivers\" />
-    <Folder Include="Features\" />
     <Folder Include="Steps\" />
-    <Folder Include="Support\" />
   </ItemGroup>
 
 </Project>

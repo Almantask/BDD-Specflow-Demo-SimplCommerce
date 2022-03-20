@@ -17,6 +17,7 @@ packages/*
 node_modules/
 bower_components/
 .vs/
+*.feature.cs
 
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
 !packages/*/build/

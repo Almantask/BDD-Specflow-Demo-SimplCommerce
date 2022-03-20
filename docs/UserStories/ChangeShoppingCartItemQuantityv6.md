@@ -32,7 +32,7 @@ So that I can choose how many items I want to buy without going back to a shop.
 
 - Clicked item quantity text box
 - typed "2"
-- => quantity is changed to "2"
+- => quantity is 2
 
 ### Quantity update will update total cost
 
