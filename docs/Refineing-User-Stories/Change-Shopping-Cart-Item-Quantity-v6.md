@@ -9,7 +9,7 @@ So that I can choose how many items I want to buy without going back to a shop.
 ### Decrement quantity when > 1
 
 - Quantity > 1
-- chose to increment quantity
+- increment quantity
 - => decremented quantity
 
 ### Cannot remove an item from a basket by decrementing quantity
@@ -21,24 +21,24 @@ So that I can choose how many items I want to buy without going back to a shop.
 ### Increment quantity when enough items in stock
 
 - Enough items in stock
-- chose to increment quantity
+- increment quantity
 - => incremented quantity
 
 ### Increment quantity is not allowed when not enough items in stock
 
 - Not enough items in stock
-- chose to increment quantity
+- increment quantity
 - => unchanged quantity
 
 ### Edit quantity directly changes quantity
 
-- Chose to change quantity directly
+- change quantity directly
 - typed "2"
 - => quantity is 2
 
 ### Edit quantity directly with invalid input rejects it
 
-- Chose to change quantity directly
+- change quantity directly
 - typed invalid quantity
 - => input rejected
 
