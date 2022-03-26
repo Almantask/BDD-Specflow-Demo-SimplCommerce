@@ -57,8 +57,6 @@ Gherkin does help by framing us into thinking from a practical point of view. It
 
 Not writing examples in Gherkin doesn't mean you shouldn't write examples at all. **The whole point of BDD - is discovering a user story through examples**. Then **use** those **examples to formulate the scenarios**. And finally **use scenarios to create living documentation verified through automate tests**. Simple examples speed things up and allows us to focus on what matters. `=>` marks outcome. Everything else is either precondition, input or action - we don't care which is which - our focus is to just define a clear example. A good example should focus on a single rule. A single rule can have more than one example.
 
-However, one question remains - what should be done if the input is invalid?
-
 ### [6 - Open questions or why it's okay to not know everything](ChangeShoppingCartItemQuantityv6.md)
 
 As mentioned in the v3 refinement, don't solutionize. It's okay to not know things, as long as you are aware of what you don't know. However, don't just leave a question mark on a part that you should cover - write the questions down.

@@ -9,42 +9,51 @@ So that I can choose how many items I want to buy without going back to a shop.
 ### Decrement quantity when > 1
 
 - Quantity > 1
-- clicked button "-"
+- chose to increment quantity
 - => decremented quantity
 
 ### Cannot remove an item from a basket by decrementing quantity
 
 - Quantity = 1
-- clicked button "-"
+- chose to decrement quantity
 - => unchanged quantity
 
-### Increment quantity only when enough items in stock
+### Increment quantity when enough items in stock
 
 - Enough items in stock
-- clicked button "+"
+- chose to increment quantity
 - => incremented quantity
 
+### Increment quantity is not allowed when not enough items in stock
+
 - Not enough items in stock
-- clicked button "+"
+- chose to increment quantity
 - => unchanged quantity
 
-### Edit quantity directly
+### Edit quantity directly changes quantity
 
-- Clicked item quantity text box
+- Chose to change quantity directly
 - typed "2"
 - => quantity is 2
 
+### Edit quantity directly with invalid input rejects it
+
+- Chose to change quantity directly
+- typed invalid quantity
+- => input rejected
+
 ### Quantity update will update total cost
 
-- 1 item in basket, costs 60$.
-- Displayed: Subtotal 60$, Order Total 60$ 
+- 1 item in basket, costs 60\$.
+- Displayed: Subtotal 60\$, Order Total 60\$ 
 - Changed quantity to 2
-- => Displayed: Subtotal 120$, Order Total 120$ 
+- => Displayed: Subtotal 120\$, Order Total 120\$ 
 
 ## Open Questions
 
-- What happens when the user types -1 in quantity? What about a letter?
-  - It should reset the quantity, but when?
+- How should we reject input? 
+- Should input rejected right after invalid character is typed or later?
+- What if we change quantity directly to a valid number, but when not enough items in stock? When should that be detected?
 
 ## Comments
 

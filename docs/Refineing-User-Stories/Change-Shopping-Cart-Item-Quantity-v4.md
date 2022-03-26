@@ -6,29 +6,26 @@ So that I can choose how many items I want to buy without going back to a shop.
 
 ## Acceptence criteria
 
-When button "+" is Clicked
+When shopper increases quantity
 Then quantity of the item is increased by 1
 
-When button "-" is clicked
+When shopper decreases quantity
 Then quantity of the item is decreased by 1
 
 Given item quantity is 1
-When button "-" is clicked
+When shopper decreases quantity
 Then quantity and cost remains the same
 
-When item quantity text box is clicked
-Then a new quantity can be typed
+When "2" for item quantity is typed
+Then item quantity is 2
 
-When item quantity text box is clicked
-And "a" is typed
+When "a" for item quantity is typed
 Then input is rejected
 
-When item quantity text box is clicked
-And "-1" is typed
+When "-1" for item quantity is typed
 Then input is rejected
 
-When item quantity text box is clicked
-And "1+1" is typed
+When "1+1" for item quantity is typed
 Then input is rejected
 
 ## Comments
