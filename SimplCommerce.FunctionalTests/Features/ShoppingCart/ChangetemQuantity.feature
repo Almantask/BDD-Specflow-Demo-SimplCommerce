@@ -1,60 +1,51 @@
-﻿Feature: Change item quantity
+﻿@ShoppingCart
+Feature: Change item quantity
 
 As Sharon the shopper
 I would like to be able to change quantity of shopping cart items
 So that I can choose how many items I want to buy without going back to a shop.
 
-@ShoppingCart
-Scenario: Test
-	Given precondition
-	When I action
-	Then I should see
+Scenario: Decrement quantity when at least 2 items in the basket
+Given item quantity at least 2
+When a shopper decrements item quantity
+Then item quantity is decremented
 
-@ShoppingCart
-Scenario: Decrement quantity when > 1
-Given item quantity is more than 1
-When a shopper increments quantity
-Then item quantity is "1"
-
-@ShoppingCart
 Scenario: Cannot remove an item from a basket by decrementing quantity
+Given item quantity 1
+When a shopper decrements item quantity
+Then item quantity is incremented
 
-- Quantity = 1
-- chose to decrement quantity
-- => unchanged quantity
-
-@ShoppingCart
 Scenario: Increment quantity when enough items in stock
+Given enough items in stock
+When a shopper decrements item quantity
+Then item quantity is incremented
 
-- Enough items in stock
-- chose to increment quantity
-- => incremented quantity
-
-@ShoppingCart
 Scenario: Increment quantity is not allowed when not enough items in stock
+Given not enough items in stock
+When a shopper increments item quantity
+Then item quantity is unchanged
 
-- Not enough items in stock
-- chose to increment quantity
-- => unchanged quantity
+Scenario: Edit quantity directly changes quantity. Only positive whole numbers accepted.
+Given a shopper wants to change item quantity directly
+When a shopper types <valid number>
+Then item quantity changes to that number
+Examples:
+| whole positive number |
+| 1            |
+| 10           |
 
-@ShoppingCart
-Scenario: Edit quantity directly changes quantity
-
-- Chose to change quantity directly
-- typed "2"
-- => quantity is 2
-
-@ShoppingCart
 Scenario: Edit quantity directly with invalid input rejects it
+Given a shopper wants to change item quantity directly
+When a shopper types <invalid number>
+Then item quantity input is rejected
+Examples:
+| description          | invalid number |
+| Negative             | -1             |
+| Zero                 | 0              |
+| Number with fraction | 1.5            |
+| More than in stock   | 99             |
 
-- Chose to change quantity directly
-- typed invalid quantity
-- => input rejected
-
-@ShoppingCart
 Scenario: Quantity update will update total cost
-
-- 1 item in basket, costs 60\$.
-- Displayed: Subtotal 60\$, Order Total 60\$ 
-- Changed quantity to 2
-- => Displayed: Subtotal 120\$, Order Total 120\$ 
+Given a shopper has a single pair of sport shoes for 60$
+When a shopper increments item quantity
+Then display shows Subtotal "120$", Order Total "120$"
