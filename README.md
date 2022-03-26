@@ -1,14 +1,18 @@
-# 
+# BDD demo using Specflow
 
 This is a demo repository of BDD. The focus here is not the source code, but rather the functional tests written using Specflow.
 This is a forked repository from https://github.com/simplcommerce/SimplCommerce.
-The ReadMe has been trimmed leaving  "how to run" sections.
+
+## Runnning tests
+
+- TODO
 
 ## About the original project
 
 A simple, cross platform, modularized ecommerce system built on .NET Core [![Join the chat at https://gitter.im/simplcommerce/SimplCommerce](https://badges.gitter.im/simplcommerce/SimplCommerce.svg)](https://gitter.im/simplcommerce/SimplCommerce?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Online demo (Azure Website)
+
 - Store front: http://demo.simplcommerce.com
 - Administration: http://demo.simplcommerce.com/admin Email: admin@simplcommerce.com Password: 1qazZAQ!
 
@@ -56,6 +60,7 @@ Continuous deployment: https://ci.simplcommerce.com
 - ASP.NET Identity Core 6.0
 - Angular 1.6.3
 - MediatR 7.0.0 for domain event
+- **Specflow 3.9.40**
 
 ## License
 
