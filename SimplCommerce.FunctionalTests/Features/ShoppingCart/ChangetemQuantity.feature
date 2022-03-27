@@ -5,9 +5,9 @@ As Sharon the shopper
 I would like to be able to change quantity of shopping cart items
 So that I can choose how many items I want to buy without going back to a shop.
 
-Background: Sharon has a single item in the basket
+Background: Sharon has a single item in the shopping cart
 
-Scenario: Decrement quantity when at least 2 items in the basket
+Scenario: Decrement quantity when at least 2 items in the shopping cart
     Given item quantity is at least 2
     When Sharon decrements item quantity
     Then item quantity is decremented
@@ -27,7 +27,7 @@ Scenario: Increment quantity is not allowed when not enough items in stock
     When Sharon increments item quantity
     Then item quantity is unchanged
 
-Scenario: Edit quantity directly changes quantity. Only positive whole numbers accepted.
+Scenario: Edit quantity directly changes quantity
     When Sharon sets item quantity to <valid number>
     Then item quantity is <valid number>
 Examples:
@@ -50,11 +50,6 @@ Examples:
     | Arithmetics          | 1+1            |
     | Blank                |                |
 
-# What if this was appended to other scenarios?
 Scenario: Quantity update will update total cost
-    When Sharon changes item quantity via <method of changing item quantity>
+    When Sharon sets item quantity
     Then shopping cart display updates Subtotal and Order Total
-        | method of changing item quantity |
-        | increment                        |
-        | decrement                        |
-        | set                              |
