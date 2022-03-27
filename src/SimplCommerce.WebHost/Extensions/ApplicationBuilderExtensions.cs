@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Net.Http.Headers;
-using SimplCommerce.Infrastructure.Data;
 using SimplCommerce.Infrastructure;
+using SimplCommerce.Infrastructure.Data;
 using SimplCommerce.Infrastructure.Localization;
 using SimplCommerce.Module.Localization;
 
-namespace SimplCommerce.WebHost.Extensions
+namespace SimplCommerce.Host.Extensions
 {
     public static class ApplicationBuilderExtensions
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace SimplCommerce.WebHost.Migrations
+namespace SimplCommerce.WebApi.Migrations
 {
     public partial class MomoPayment : Migration
     {

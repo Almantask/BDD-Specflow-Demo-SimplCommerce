@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace SimplCommerce.FunctionalTests.Steps.ShoppingCart
 {
+    [Binding]
     public class ValidationSteps
     {
         [Then(@"item quantity input is rejected")]
         public void ThenItemQuantityInputIsRejected()
         {
-            throw new PendingStepException();
+            
         }
     }
 }

@@ -2,7 +2,7 @@
 using IdentityServer4;
 using IdentityServer4.Models;
 
-namespace SimplCommerce.WebHost.IdentityServer
+namespace SimplCommerce.Host.IdentityServer
 {
     public static class IdentityServerConfig
     {

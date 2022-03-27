@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.WebEncoders;
 using Microsoft.OpenApi.Models;
+using SimplCommerce.Host;
+using SimplCommerce.Host.Extensions;
 using SimplCommerce.Infrastructure;
 using SimplCommerce.Infrastructure.Data;
 using SimplCommerce.Infrastructure.Modules;
@@ -20,112 +22,123 @@ using SimplCommerce.Module.Core.Data;
 using SimplCommerce.Module.Core.Extensions;
 using SimplCommerce.Module.Localization.Extensions;
 using SimplCommerce.Module.Localization.TagHelpers;
-using SimplCommerce.WebHost.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
-ConfigureService();
+
+var startup = new Startup(builder.Configuration);
+
+startup.ConfigureServices(builder.Services, builder.Environment);
+
 var app = builder.Build();
-Configure();
+
+startup.Configure(app, app.Environment);
+
 app.Run();
 
-void ConfigureService() 
-{
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    builder.Configuration.AddEntityFrameworkConfig(options =>
-        options.UseSqlServer(connectionString));
+//var builder = WebApplication.CreateBuilder(args);
+//ConfigureService();
+//var app = builder.Build();
+//Configure();
+//app.Run();
 
-    GlobalConfiguration.WebRootPath = builder.Environment.WebRootPath;
-    GlobalConfiguration.ContentRootPath = builder.Environment.ContentRootPath;
+//void ConfigureService()
+//{
+//    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+//    builder.Configuration.AddEntityFrameworkConfig(options =>
+//        options.UseSqlServer(connectionString));
 
-    builder.Services.AddModules();
-    builder.Services.AddCustomizedDataStore(builder.Configuration);
-    builder.Services.AddCustomizedIdentity(builder.Configuration);
-    builder.Services.AddHttpClient();
-    builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
-    builder.Services.AddTransient(typeof(IRepositoryWithTypedId<,>), typeof(RepositoryWithTypedId<,>));
-    builder.Services.AddScoped<SlugRouteValueTransformer>();
+//    GlobalConfiguration.WebRootPath = builder.Environment.WebRootPath;
+//    GlobalConfiguration.ContentRootPath = builder.Environment.ContentRootPath;
 
-    builder.Services.AddCustomizedLocalization();
+//    builder.Services.AddModules();
+//    builder.Services.AddCustomizedDataStore(builder.Configuration);
+//    builder.Services.AddCustomizedIdentity(builder.Configuration);
+//    builder.Services.AddHttpClient();
+//    builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+//    builder.Services.AddTransient(typeof(IRepositoryWithTypedId<,>), typeof(RepositoryWithTypedId<,>));
+//    builder.Services.AddScoped<SlugRouteValueTransformer>();
 
-    builder.Services.AddCustomizedMvc(GlobalConfiguration.Modules);
-    builder.Services.Configure<RazorViewEngineOptions>(
-        options => { options.ViewLocationExpanders.Add(new ThemeableViewLocationExpander()); });
-    builder.Services.Configure<WebEncoderOptions>(options =>
-    {
-        options.TextEncoderSettings = new TextEncoderSettings(UnicodeRanges.All);
-    });
-    builder.Services.AddScoped<ITagHelperComponent, LanguageDirectionTagHelperComponent>();
-    builder.Services.AddTransient<IRazorViewRenderer, RazorViewRenderer>();
-    builder.Services.AddAntiforgery(options => options.HeaderName = "X-XSRF-Token");
-    builder.Services.AddCloudscribePagination();
+//    builder.Services.AddCustomizedLocalization();
 
-    foreach (var module in GlobalConfiguration.Modules)
-    {
-        var moduleInitializerType = module.Assembly.GetTypes()
-           .FirstOrDefault(t => typeof(IModuleInitializer).IsAssignableFrom(t));
-        if ((moduleInitializerType != null) && (moduleInitializerType != typeof(IModuleInitializer)))
-        {
-            var moduleInitializer = (IModuleInitializer)Activator.CreateInstance(moduleInitializerType);
-            builder.Services.AddSingleton(typeof(IModuleInitializer), moduleInitializer);
-            moduleInitializer.ConfigureServices(builder.Services);
-        }
-    }
+//    builder.Services.AddCustomizedMvc(GlobalConfiguration.Modules);
+//    builder.Services.Configure<RazorViewEngineOptions>(
+//        options => { options.ViewLocationExpanders.Add(new ThemeableViewLocationExpander()); });
+//    builder.Services.Configure<WebEncoderOptions>(options =>
+//    {
+//        options.TextEncoderSettings = new TextEncoderSettings(UnicodeRanges.All);
+//    });
+//    builder.Services.AddScoped<ITagHelperComponent, LanguageDirectionTagHelperComponent>();
+//    builder.Services.AddTransient<IRazorViewRenderer, RazorViewRenderer>();
+//    builder.Services.AddAntiforgery(options => options.HeaderName = "X-XSRF-Token");
+//    builder.Services.AddCloudscribePagination();
 
-    builder.Services.AddScoped<ServiceFactory>(p => p.GetService);
-    builder.Services.AddScoped<IMediator, Mediator>();
+//    foreach (var module in GlobalConfiguration.Modules)
+//    {
+//        var moduleInitializerType = module.Assembly.GetTypes()
+//           .FirstOrDefault(t => typeof(IModuleInitializer).IsAssignableFrom(t));
+//        if ((moduleInitializerType != null) && (moduleInitializerType != typeof(IModuleInitializer)))
+//        {
+//            var moduleInitializer = (IModuleInitializer)Activator.CreateInstance(moduleInitializerType);
+//            builder.Services.AddSingleton(typeof(IModuleInitializer), moduleInitializer);
+//            moduleInitializer.ConfigureServices(builder.Services);
+//        }
+//    }
 
-    builder.Services.AddSwaggerGen(c =>
-    {
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "SimplCommerce API", Version = "v1" });
-    });
-}
+//    builder.Services.AddScoped<ServiceFactory>(p => p.GetService);
+//    builder.Services.AddScoped<IMediator, Mediator>();
 
-void Configure()
-    { 
-    if (app.Environment.IsDevelopment())
-    {
-        app.UseDeveloperExceptionPage();
-        app.UseMigrationsEndPoint();
-    }
-    else
-    {
-        app.UseWhen(
-            context => !context.Request.Path.StartsWithSegments("/api", StringComparison.OrdinalIgnoreCase),
-            a => a.UseExceptionHandler("/Home/Error")
-        );
-        app.UseHsts();
-    }
+//    builder.Services.AddSwaggerGen(c =>
+//    {
+//        c.SwaggerDoc("v1", new OpenApiInfo { Title = "SimplCommerce API", Version = "v1" });
+//    });
+//}
 
-    app.UseWhen(
-        context => !context.Request.Path.StartsWithSegments("/api", StringComparison.OrdinalIgnoreCase),
-        a => a.UseStatusCodePagesWithReExecute("/Home/ErrorWithCode/{0}")
-    );
+//void Configure()
+//{
+//    if (app.Environment.IsDevelopment())
+//    {
+//        app.UseDeveloperExceptionPage();
+//        app.UseMigrationsEndPoint();
+//    }
+//    else
+//    {
+//        app.UseWhen(
+//            context => !context.Request.Path.StartsWithSegments("/api", StringComparison.OrdinalIgnoreCase),
+//            a => a.UseExceptionHandler("/Home/Error")
+//        );
+//        app.UseHsts();
+//    }
 
-    app.UseHttpsRedirection();
-    app.UseCustomizedStaticFiles(builder.Environment);
-    app.UseRouting();
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "SimplCommerce API V1");
-    });
-    app.UseCookiePolicy();
-    app.UseCustomizedIdentity();
-    app.UseCustomizedRequestLocalization();
-    app.UseEndpoints(endpoints =>
-    {
-        endpoints.MapDynamicControllerRoute<SlugRouteValueTransformer>("/{**slug}");
-        endpoints.MapControllerRoute(
-            name: "areas",
-            pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-        endpoints.MapControllerRoute(
-            name: "default",
-            pattern: "{controller=Home}/{action=Index}/{id?}");
-    });
+//    app.UseWhen(
+//        context => !context.Request.Path.StartsWithSegments("/api", StringComparison.OrdinalIgnoreCase),
+//        a => a.UseStatusCodePagesWithReExecute("/Home/ErrorWithCode/{0}")
+//    );
 
-    var moduleInitializers = app.Services.GetServices<IModuleInitializer>();
-    foreach (var moduleInitializer in moduleInitializers)
-    {
-        moduleInitializer.Configure(app, builder.Environment);
-    }
-}
+//    app.UseHttpsRedirection();
+//    app.UseCustomizedStaticFiles(builder.Environment);
+//    app.UseRouting();
+//    app.UseSwagger();
+//    app.UseSwaggerUI(c =>
+//    {
+//        c.SwaggerEndpoint("/swagger/v1/swagger.json", "SimplCommerce API V1");
+//    });
+//    app.UseCookiePolicy();
+//    app.UseCustomizedIdentity();
+//    app.UseCustomizedRequestLocalization();
+//    app.UseEndpoints(endpoints =>
+//    {
+//        endpoints.MapDynamicControllerRoute<SlugRouteValueTransformer>("/{**slug}");
+//        endpoints.MapControllerRoute(
+//            name: "areas",
+//            pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+//        endpoints.MapControllerRoute(
+//            name: "default",
+//            pattern: "{controller=Home}/{action=Index}/{id?}");
+//    });
+
+//    var moduleInitializers = app.Services.GetServices<IModuleInitializer>();
+//    foreach (var moduleInitializer in moduleInitializers)
+//    {
+//        moduleInitializer.Configure(app, builder.Environment);
+//    }
+//}

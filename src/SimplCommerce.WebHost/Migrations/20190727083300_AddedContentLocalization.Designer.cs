@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SimplCommerce.Module.Core.Data;
 
-namespace SimplCommerce.WebHost.Migrations
+namespace SimplCommerce.WebApi.Migrations
 {
     [DbContext(typeof(SimplDbContext))]
     [Migration("20190727083300_AddedContentLocalization")]

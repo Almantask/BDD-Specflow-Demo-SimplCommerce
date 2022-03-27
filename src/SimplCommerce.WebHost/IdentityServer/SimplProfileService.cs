@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using SimplCommerce.Module.Core.Models;
 
-namespace SimplCommerce.WebHost.IdentityServer
+namespace SimplCommerce.Host.IdentityServer
 {
     public class SimplProfileService : IProfileService
     {
