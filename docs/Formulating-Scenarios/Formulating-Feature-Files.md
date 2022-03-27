@@ -22,3 +22,7 @@ To make it more readable - we should use something like "more than 1".
 Then item quantity is unchanged
 
 ## Dilema 2 - Dry vs Damp
+
+background worked
+
+Quantity update will update total cost
