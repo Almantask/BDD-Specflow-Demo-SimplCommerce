@@ -27,7 +27,6 @@ The following will illustrate a [refinement](https://www.digite.com/agile/backlo
 [3](#3---no-solutionizing-and-better-roles) 
 [4](#4---exploring-the-story-through-examples) 
 [5](#5---more-examples-and-grouped-to-business-rules)
-[6](#6---open-questions-or-why-its-okay-to-not-know-everything)
 
 ### [1 - Plain story](ChangeShoppingCartItemQuantityv1.md)
 
@@ -57,10 +56,6 @@ Gherkin does help by framing us into thinking from a practical point of view. It
 
 Not writing examples in Gherkin doesn't mean you shouldn't write examples at all. **The whole point of BDD - is discovering a user story through examples**. Then **use** those **examples to formulate the scenarios**. And finally **use scenarios to create living documentation verified through automate tests**. Simple examples speed things up and allows us to focus on what matters. `=>` marks outcome. Everything else is either precondition, input or action - we don't care which is which - our focus is to just define a clear example. A good example should focus on a single rule. A single rule can have more than one example.
 
-### [6 - Open questions or why it's okay to not know everything](ChangeShoppingCartItemQuantityv6.md)
-
-As mentioned in the v3 refinement, don't solutionize. It's okay to not know things, as long as you are aware of what you don't know. However, don't just leave a question mark on a part that you should cover - write the questions down.
-
 ## Summary
 
 In BDD, a user story should be defined using:
@@ -68,4 +63,3 @@ In BDD, a user story should be defined using:
 - A short description using a persona.
 - Acceptence criteria (rules)
 - Rules should be illustrated through examples (written in any form, as long as it is convenient)
-- Do all you can to figure out all the business cases, but don't guess what you don't know - leave open questions where necessary

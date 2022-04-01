@@ -7,29 +7,29 @@ So that I can choose how many items I want to buy without going back to a shop.
 
 Background: Sharon has a single item in the shopping cart
 
-Scenario: Decrement quantity when at least 2 items in the shopping cart
+Scenario: Decrement quantity when item quantity in shopping cart is enough
     Given item quantity is at least 2
     When Sharon decrements item quantity
-    Then item quantity is decremented
+    Then item quantity should be decremented
 
 #Scenario: Cannot remove an item from a basket by decrementing quantity
 #    Given item quantity is 1
 #    When Sharon decrements item quantity
-#    Then item quantity is unchanged
+#    Then item quantity should be unchanged
 #
 #Scenario: Increment quantity when enough items in stock
 #    Given enough items in stock
 #    When Sharon increments item quantity
-#    Then item quantity is incremented
+#    Then item quantity should be incremented
 #
 #Scenario: Increment quantity is not allowed when not enough items in stock
 #    Given not enough items in stock
 #    When Sharon increments item quantity
-#    Then item quantity is unchanged
+#    Then item quantity should be unchanged
 #
 #Scenario: Edit quantity directly changes quantity
 #    When Sharon sets item quantity to <valid number>
-#    Then item quantity is <valid number>
+#    Then item quantity should be <valid number>
 #Examples:
 #    | valid number |
 #    | 1            |
@@ -38,7 +38,7 @@ Scenario: Decrement quantity when at least 2 items in the shopping cart
 #
 #Scenario: Edit quantity directly with invalid input rejects it
 #    When Sharon sets item quantity to <invalid number>
-#    Then item quantity input is rejected
+#    Then item quantity input should be rejected
 #Examples:
 #    | description          | invalid number |
 #    | Negative             | -1             |
@@ -52,4 +52,4 @@ Scenario: Decrement quantity when at least 2 items in the shopping cart
 #
 #Scenario: Quantity update will update total cost
 #    When Sharon sets item quantity
-#    Then shopping cart display updates Subtotal and Order Total
+#    Then shopping cart display Subtotal and Order Total should be updated

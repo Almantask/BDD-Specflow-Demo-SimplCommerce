@@ -4,7 +4,7 @@ As a shopper
 I would like to be able to change quantity of shopping cart items
 So that I can choose how many items I want to buy without going back to a shop.
 
-## Acceptence criteria
+## Acceptance criteria
 
 - Decrement quantity by 1
 - Increment quantity by 1

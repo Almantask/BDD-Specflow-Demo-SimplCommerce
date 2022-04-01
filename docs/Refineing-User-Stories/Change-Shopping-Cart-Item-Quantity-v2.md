@@ -4,7 +4,7 @@ As a user
 I would like to be able to change quantity of shopping cart items
 So that I can choose how many items I want to buy without going back to a shop.
 
-## Acceptence criteria
+## Acceptance criteria
 
 - A button to increase quantity
 - A button to decrease quantity

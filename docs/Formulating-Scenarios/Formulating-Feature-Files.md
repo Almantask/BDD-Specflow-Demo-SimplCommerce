@@ -53,3 +53,16 @@ Scenario: Quantity update will update total cost
 ## Dilema 3 - Where to put my steps?
 
 https://github.com/JD-Innovensa/InMemoryPlaywrightDemo
+
+## Ambigious steps?
+
+Given item quantity is at least 2
+Given item quantity is 2
+
+When in assertion...
+
+## Dilema 4 - too many examples
+
+Refer to business experiences the other day.
+5 scenarios. Do we need 5 new tests?
+Those are just illustrations. I could have added a lot more.
