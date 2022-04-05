@@ -26,7 +26,9 @@ Scenario: Increase item quantity when a single item3
 	Then item quantity should be 2
 
 Scenario: Increase item quantity when a single item4
-    * a shopper has a single item in their cart
-	* a shopper increments quantity
-	* item quantity should be 2
+    Given item quantity is 2
+	When a shopper increments item quantity
+	Then item quantity is 2
+
+ 
 
