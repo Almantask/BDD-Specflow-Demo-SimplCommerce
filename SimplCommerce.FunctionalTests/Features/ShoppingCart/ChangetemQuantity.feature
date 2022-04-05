@@ -5,7 +5,8 @@ As Sharon the shopper
 I would like to be able to change quantity of shopping cart items
 So that I can choose how many items I want to buy without going back to a shop.
 
-Background: Sharon has a single item in the shopping cart
+Background: 
+    Given Sharopping cart contains an item
 
 Scenario: Decrement quantity when item quantity in shopping cart is enough
     Given item quantity is at least 2

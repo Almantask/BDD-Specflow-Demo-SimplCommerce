@@ -19,7 +19,7 @@
         [Given(@"item quantity is ([0-9]+)")]
         public void GivenItemQuantityIs(int p0)
         {
-
+            // quantity = p0;
         }
 
         [Then(@"item quantity is unchanged")]
@@ -58,5 +58,22 @@
             throw new PendingStepException();
         }
 
+        [Then(@"item quantity should be unchanged")]
+        public void ThenItemQuantityShouldBeUnchanged()
+        {
+            throw new PendingStepException();
+        }
+
+        [Then(@"item quantity should be incremented")]
+        public void ThenItemQuantityShouldBeIncremented()
+        {
+            throw new PendingStepException();
+        }
+
+        [Then(@"item quantity should be (.*)")]
+        public void ThenItemQuantityShouldBe(int p0)
+        {
+            throw new PendingStepException();
+        }
     }
 }
