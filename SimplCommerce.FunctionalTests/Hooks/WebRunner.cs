@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.TestHost;
-using SimplCommerce.FunctionalTests.Bootstrap;
 
 namespace SimplCommerce.FunctionalTests.Hooks
 {
@@ -17,18 +15,7 @@ namespace SimplCommerce.FunctionalTests.Hooks
         [BeforeTestRun]
         public static void Start()
         {
-            // Launches the app
-            //_server = new WebApplicationFactory<Program>();
-            //_server.WithWebHostBuilder(builder =>
-            //{
-            //    builder.
-            //})
-            //var client = _server.CreateClient();
-
-            //client.GetAsync("login");
-            _server = new TestServer<Program>("_");
-            _server.CreateClient();
-            //_server.Run();
+            _server = new WebApplicationFactory<Program>();
         }
 
         [AfterTestRun]
