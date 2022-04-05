@@ -1,4 +1,5 @@
-﻿Feature: UserRegistration
+﻿@ignore
+Feature: UserRegistration
 
 A short summary of the feature
 

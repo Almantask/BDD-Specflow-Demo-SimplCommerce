@@ -1,4 +1,5 @@
-﻿Feature: Economy Parking feature
+﻿@ignore
+Feature: Economy Parking feature
   The parking lot calculator can calculate costs for Economy parking.
 
 Scenario: Calculate Economy Parking Cost

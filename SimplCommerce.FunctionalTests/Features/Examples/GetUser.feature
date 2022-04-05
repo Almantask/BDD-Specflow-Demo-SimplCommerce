@@ -1,4 +1,5 @@
-﻿Feature: List
+﻿@ignore
+Feature: GetUser
 
 A short summary of the feature
 

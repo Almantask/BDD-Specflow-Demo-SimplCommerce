@@ -1,4 +1,5 @@
-﻿Feature: CasualShopperJourney
+﻿@ignore
+Feature: CasualShopperJourney
 
 Most users browse for a few items:
 - search some
@@ -33,5 +34,4 @@ Then shopping cart should have the following items:
 * 1 "iPad Pro Wi-Fi 4G 128GB"
 When Shona proceeds to checkout
 Then address details window appears
-...
 
