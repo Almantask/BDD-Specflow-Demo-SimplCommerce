@@ -16,9 +16,9 @@ namespace SimplCommerce.FunctionalTests.Pages
             return this;
         }
 
-        public ItemPage NavigateToItemPage(string item)
+        public ProductPage NavigateToProductPage(string item)
         {
-            return new ItemPage(Driver, item).NavigateTo();
+            return new ProductPage(Driver, item).NavigateTo();
         }
     }
 }

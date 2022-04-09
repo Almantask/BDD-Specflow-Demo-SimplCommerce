@@ -24,7 +24,7 @@ namespace SimplCommerce.FunctionalTests.Steps.ShoppingCart
 
             _navigationBar
                 .NavigateToHomePage()
-                .NavigateToItemPage(ExpectedOnlyItem)
+                .NavigateToProductPage(ExpectedOnlyItem)
                 .AddToCart();
 
             _navigationBar.NavigateToShoppingCart();

@@ -3,14 +3,14 @@
     [Binding]
     public class StockSteps
     {
-        [Given(@"not enough items in stock")]
-        public void GivenNotEnoughItemsInStock()
+        [Given(@"not enough products in stock")]
+        public void GivenNotEnoughProductsInStock()
         {
 
         }
 
-        [Given(@"enough items in stock")]
-        public void GivenEnoughItemsInStock()
+        [Given(@"enough products in stock")]
+        public void GivenEnoughProductsInStock()
         {
 
         }

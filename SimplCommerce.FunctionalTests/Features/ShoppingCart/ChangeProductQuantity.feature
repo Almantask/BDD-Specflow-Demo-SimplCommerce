@@ -1,0 +1,56 @@
+﻿@ShoppingCart
+Feature: Change product quantity
+
+As Ausra the shopper
+I would like to be able to change quantity of shopping cart products
+So that I can choose how many products I want to buy without going back to a shop.
+
+Background:
+    Given Shopping cart contains an product
+
+Scenario: Decrement quantity when product quantity in shopping cart is enough
+    Given product quantity is at least 2
+    When Ausra decrements product quantity
+    Then product quantity should be decremented
+
+Scenario: Cannot remove an product from a basket by decrementing quantity
+    Given product quantity is 1
+    When Ausra decrements product quantity
+    Then product quantity should be unchanged
+
+Scenario: Increment quantity when enough products in stock
+    Given enough products in stock
+    When Ausra increments product quantity
+    Then product quantity should be incremented
+
+Scenario: Increment quantity is not allowed when not enough products in stock
+    Given not enough products in stock
+    When Ausra increments product quantity
+    Then product quantity should be unchanged
+
+Scenario: Edit quantity directly changes quantity
+    When Ausra sets product quantity to <valid number>
+    Then product quantity should be <valid number>
+Examples:
+    | valid number |
+    | 1            |
+    | 10           |
+    | +1           |
+
+Scenario: Edit quantity directly with invalid input rejects it
+    When Ausra sets product quantity to <invalid number>
+    Then product quantity input should be rejected
+Examples:
+    | description          | invalid number |
+    | Negative             | -1             |
+    | Zero                 | 0              |
+    | Number with fraction | 1.5            |
+    | More than in stock   | 99             |
+    | Roman number         | I              |
+    | Letter               | a              |
+    | Arithmetics          | 1+1            |
+    | Blank                |                |
+
+Scenario: Quantity update will update total cost
+    When Ausra sets product quantity
+    Then shopping cart display Subtotal and Order Total should be updated

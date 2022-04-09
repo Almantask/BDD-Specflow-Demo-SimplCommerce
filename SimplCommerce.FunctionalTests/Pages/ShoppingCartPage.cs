@@ -14,7 +14,7 @@ namespace SimplCommerce.FunctionalTests.Pages
 
         public int Count(string item)
         {
-            var itemElement = FindItem(item);
+            var itemElement = FindProduct(item);
             var quantityElement = itemElement?.FindElement(By.ClassName("quantity-field ng-pristine ng-untouched ng-valid ng-not-empty"));
             var quantityValue = quantityElement?.GetAttribute("value");
             if (string.IsNullOrWhiteSpace(quantityValue))
@@ -31,7 +31,7 @@ namespace SimplCommerce.FunctionalTests.Pages
             return this;
         }
 
-        private IWebElement? FindItem(string name)
+        private IWebElement? FindProduct(string name)
         {
             const string itemNameTag = "h6";
             var itemHeaders = Driver.FindElements(By.TagName(itemNameTag));
