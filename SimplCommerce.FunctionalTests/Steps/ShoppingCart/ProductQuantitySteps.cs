@@ -8,10 +8,12 @@ namespace SimplCommerce.FunctionalTests.Steps.ShoppingCart
     [Binding]
     public class ProductQuantitySteps
     {
+        private readonly ScenarioContext _context;
         private readonly ShoppingCartPage _shoppingCartPage;
 
-        public ProductQuantitySteps(IWebDriver webDriver)
+        public ProductQuantitySteps(IWebDriver webDriver, ScenarioContext context)
         {
+            _context = context;
             _shoppingCartPage = new ShoppingCartPage(webDriver);
             // Implied that all that is run will run in the context of ShoppingCartPage.
             _shoppingCartPage.NavigateTo();
@@ -78,10 +80,11 @@ namespace SimplCommerce.FunctionalTests.Steps.ShoppingCart
         /// <param name="condition">original, current</param>
         private void ProductQuantityShouldBe(Func<int, int, bool> condition)
         {
-            var originalQuantity = 0;
-            var currentQuantity = 0;
+            var originalQuantity = _context.GetInitialProductQuantity();
+            var currentQuantity = _shoppingCartPage.GetProductQuantity(ExpectedOnlyProduct);
+
             var isConditionMet = condition(originalQuantity, currentQuantity);
-            Assert.True(isConditionMet, $"Failed item quantity expectations.{Environment.NewLine}" +
+            Assert.True(isConditionMet, $"Item quantity is not as expected.{Environment.NewLine}" +
                                         $"Original: {originalQuantity} Current: {currentQuantity}.");
         }
     }
