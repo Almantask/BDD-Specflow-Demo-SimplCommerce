@@ -20,6 +20,19 @@ public class ProductPage : BasePage
 
     public ProductPage AddToCart()
     {
+        // Compound class names aren't supported.
+        // Use CssSelector instead of class selector.
+        // Make sure it starts with "." and classes are separate with ".".
+        var addToCartButton = Driver.FindElements(By.CssSelector(".btn.btn-lg.btn-add-cart"));
+        addToCartButton?.FirstOrDefault()?.Click();
+        return this;
+    }
+
+    public ProductPage CloseProductAddedToCartModal()
+    {
+        var closeButton = Driver.FindElement(By.ClassName("close"));
+        closeButton.Click();
+
         return this;
     }
 }

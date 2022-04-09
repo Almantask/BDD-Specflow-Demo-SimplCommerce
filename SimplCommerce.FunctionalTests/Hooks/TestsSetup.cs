@@ -10,8 +10,6 @@ namespace SimplCommerce.FunctionalTests.Hooks
     [Binding]
     public class TestsSetup
     {
-
-
         [ScenarioDependencies]
         public static IServiceCollection CreateServices()
         {

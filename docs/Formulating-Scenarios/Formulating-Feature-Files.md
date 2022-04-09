@@ -66,3 +66,7 @@ When in assertion...
 Refer to business experiences the other day.
 5 scenarios. Do we need 5 new tests?
 Those are just illustrations. I could have added a lot more.
+
+## Dilema 5 - increased understanding and code out synchronization
+
+Item -> Product
