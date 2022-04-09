@@ -7,11 +7,13 @@ namespace SimplCommerce.FunctionalTests.Steps.ShoppingCart
     [Binding]
     public class ShoppingCartProductsSteps
     {
+        private ScenarioContext _context;
         private readonly NavigationBar _navigationBar;
 
-        public ShoppingCartProductsSteps(IWebDriver driver)
+        public ShoppingCartProductsSteps(IWebDriver driver, ScenarioContext context)
         {
             _navigationBar = new NavigationBar(driver);
+            _context = context;
         }
 
         [Given(@"Shopping cart contains a product")]
@@ -20,15 +22,21 @@ namespace SimplCommerce.FunctionalTests.Steps.ShoppingCart
             var quantity = _navigationBar
                 .NavigateToShoppingCart()
                 .GetProductQuantity(ExpectedOnlyProduct);
-            if (quantity >= 1) return;
 
-            _navigationBar
-                .NavigateToHomePage()
-                .NavigateToProductPage(ExpectedOnlyProduct)
-                .AddToCart()
-                .CloseProductAddedToCartModal();
+            if (quantity < 1)
+            {
+                _navigationBar
+                    .NavigateToHomePage()
+                    .NavigateToProductPage(ExpectedOnlyProduct)
+                    .AddToCart()
+                    .CloseProductAddedToCartModal();
 
-            _navigationBar.NavigateToShoppingCart();
+                quantity = 1;
+
+                _navigationBar.NavigateToShoppingCart();
+            }
+
+            _context.SetProductQuantity(quantity);
         }
     }
 }

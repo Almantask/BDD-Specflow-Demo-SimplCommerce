@@ -4,6 +4,8 @@
     {
         public const string ShoppingCartTestTag = "ShoppingCart";
         public const string ExpectedOnlyProduct = "Square Neck Back";
+        public const string ExpectedOnlyProductFullName = "Square Neck Back Silver S";
+
 
         public static void SetProductQuantity(this ScenarioContext context, int quantity)
         {

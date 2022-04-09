@@ -14,7 +14,7 @@ namespace SimplCommerce.FunctionalTests.Db
                           FROM Inventory_Stock as Stock
                           INNER JOIN Catalog_Product as Product
                           ON Stock.ProductId = Product.Id
-                          where Product.Name = @product'";
+                          where Product.Name = @product";
 
             using var connection = new SqlConnection(Constants.ConnectionString);
             connection.Open();
@@ -28,11 +28,11 @@ namespace SimplCommerce.FunctionalTests.Db
         {
             // Product name must be unique.
             // In reality, this might not be the case and you should use an id instead.
-            const string sql = $@"UPDATE SET Stock.Quantity = @quantity
+            const string sql = $@"UPDATE Stock SET Stock.Quantity = @quantity
                           FROM Inventory_Stock as Stock
                           INNER JOIN Catalog_Product as Product
                           ON Stock.ProductId = Product.Id
-                          where Product.Name = @product'";
+                          where Product.Name = @product";
 
             using var connection = new SqlConnection(Constants.ConnectionString);
             connection.Open();
