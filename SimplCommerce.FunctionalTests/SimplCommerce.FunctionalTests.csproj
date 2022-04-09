@@ -26,6 +26,7 @@
   <ItemGroup>
     <Folder Include="Drivers\" />
     <Folder Include="Features\Journeys\" />
+    <Folder Include="Steps\Stock\" />
   </ItemGroup>
 
   <ItemGroup>

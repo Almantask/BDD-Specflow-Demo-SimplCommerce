@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 
 namespace SimplCommerce.FunctionalTests.Extensions
 {
@@ -13,17 +8,17 @@ namespace SimplCommerce.FunctionalTests.Extensions
             => webElement?.FindElement(By.XPath(".//.."));
 
         /// <summary>
-        /// Sometimes WebElement is in a stale state.
+        /// When a page refreshes a WebElement might be in a stale state.
         /// A retry might be required.
         /// </summary>
         /// <returns></returns>
-        public static IWebElement TryClicking(this IWebElement? element, int maxTries)
+        public static IWebElement? TryClicking(this IWebElement? element, int maxTries)
         {
             while (maxTries > 0)
             {
                 try
                 {
-                    element.Click();
+                    element?.Click();
                 }
                 catch (StaleElementReferenceException)
                 {

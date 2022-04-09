@@ -38,7 +38,7 @@ namespace SimplCommerce.Module.Inventory.Areas.Inventory.Controllers
         {
             var currentUser = await _workContext.GetCurrentUser();
             var warehouse = _warehouseRepository.Query().FirstOrDefault(x => x.Id == warehouseId);
-            if(warehouse == null)
+            if (warehouse == null)
             {
                 return NotFound();
             }
@@ -96,9 +96,9 @@ namespace SimplCommerce.Module.Inventory.Areas.Inventory.Controllers
                 return BadRequest(new { error = "You don't have permission to manage this warehouse" });
             }
 
-            foreach(var item in stockVms)
+            foreach (var item in stockVms)
             {
-                if(item.AdjustedQuantity == 0)
+                if (item.AdjustedQuantity == 0)
                 {
                     continue;
                 }
@@ -132,7 +132,7 @@ namespace SimplCommerce.Module.Inventory.Areas.Inventory.Controllers
                 x.AdjustedQuantity,
                 x.Note
             }).ToListAsync();
-  
+
             return Ok(stockHistory);
         }
     }

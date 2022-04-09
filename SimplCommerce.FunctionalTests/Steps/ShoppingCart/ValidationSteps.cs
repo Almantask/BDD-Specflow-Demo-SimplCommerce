@@ -1,6 +1,4 @@
-﻿
-
-namespace SimplCommerce.FunctionalTests.Steps.ShoppingCart
+﻿namespace SimplCommerce.FunctionalTests.Steps.ShoppingCart
 {
     [Binding]
     public class ValidationSteps

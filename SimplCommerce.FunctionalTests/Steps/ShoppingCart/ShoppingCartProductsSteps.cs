@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using SimplCommerce.FunctionalTests.Pages;
+using static SimplCommerce.FunctionalTests.Steps.ShoppingCart.ShoppingCartTestContext;
 
 namespace SimplCommerce.FunctionalTests.Steps.ShoppingCart
 {
@@ -7,7 +8,6 @@ namespace SimplCommerce.FunctionalTests.Steps.ShoppingCart
     public class ShoppingCartProductsSteps
     {
         private readonly NavigationBar _navigationBar;
-        private const string ExpectedOnlyProduct = "Square Neck Back";
 
         public ShoppingCartProductsSteps(IWebDriver driver)
         {
