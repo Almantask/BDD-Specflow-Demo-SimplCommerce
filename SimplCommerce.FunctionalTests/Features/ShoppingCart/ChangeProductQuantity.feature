@@ -57,7 +57,7 @@ Examples:
     | Arithmetics          | 1+1            |
     | Blank                |                |
 
-@ignore
+@OrderSummary
 Scenario: Quantity update will update total cost
     When Ausra sets product quantity
     Then shopping cart display Subtotal and Order Total should be updated

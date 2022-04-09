@@ -117,5 +117,24 @@ namespace SimplCommerce.FunctionalTests.Pages
             => productElement?.FindElement(
                 By.CssSelector(".quantity-field.ng-pristine.ng-untouched.ng-valid.ng-not-empty"));
 
+        public decimal GetSubtotal()
+        {
+            throw new NotImplementedException();
+        }
+
+        public decimal GetDiscount()
+        {
+            throw new NotImplementedException();
+        }
+
+        public decimal GetOrderTotal()
+        {
+            throw new NotImplementedException();
+        }
+
+        public decimal GetProductPrice(string expectedOnlyProduct)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
