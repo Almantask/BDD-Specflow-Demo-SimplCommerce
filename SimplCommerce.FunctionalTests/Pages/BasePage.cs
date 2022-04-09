@@ -16,11 +16,6 @@ namespace SimplCommerce.FunctionalTests.Pages
             Driver = driver;
         }
 
-        protected void NavigateTo()
-        {
-            Driver.Navigate().GoToUrl("todo");
-        }
-
         protected void NavigateTo(string url)
         {
             if (Driver.Url == url) return;

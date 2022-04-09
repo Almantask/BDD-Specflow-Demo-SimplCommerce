@@ -3,14 +3,8 @@
     [Binding]
     public class ItemQuantitySteps
     {
-        [When(@"Sharon decrements item quantity")]
-        public void WhenSharonDecrementsItemQuantity()
-        {
-
-        }
-
-        [Then(@"item quantity is decremented")]
-        public void ThenItemQuantityIsDecremented()
+        [When(@"Ausra decrements item quantity")]
+        public void WhenAusraDecrementsItemQuantity()
         {
 
         }
@@ -22,32 +16,20 @@
             // quantity = p0;
         }
 
-        [Then(@"item quantity is unchanged")]
-        public void ThenItemQuantityIsUnchanged()
+        [When(@"Ausra increments item quantity")]
+        public void WhenAusraIncrementsItemQuantity()
         {
 
         }
 
-        [When(@"Sharon increments item quantity")]
-        public void WhenSharonIncrementsItemQuantity()
+        [When(@"Ausra sets item quantity to (.*)")]
+        public void WhenAusraSetsItemQuantityTo(int p0)
         {
 
         }
 
-        [Then(@"item quantity is incremented")]
-        public void ThenItemQuantityIsIncremented()
-        {
-
-        }
-
-        [When(@"Sharon sets item quantity to (.*)")]
-        public void WhenSharonSetsItemQuantityTo(int p0)
-        {
-
-        }
-
-        [When(@"Sharon sets item quantity")]
-        public void WhenSharonSetsItemQuantity()
+        [When(@"Ausra sets item quantity")]
+        public void WhenAusraSetsItemQuantity()
         {
 
         }
@@ -66,12 +48,6 @@
 
         [Then(@"item quantity should be incremented")]
         public void ThenItemQuantityShouldBeIncremented()
-        {
-            throw new PendingStepException();
-        }
-
-        [Then(@"item quantity should be (.*)")]
-        public void ThenItemQuantityShouldBe(int p0)
         {
             throw new PendingStepException();
         }
