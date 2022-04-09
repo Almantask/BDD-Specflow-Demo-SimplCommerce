@@ -1,12 +1,10 @@
-﻿using Humanizer.Localisation;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using SimplCommerce.FunctionalTests.Pages;
 using SolidToken.SpecFlow.DependencyInjection;
 
-namespace SimplCommerce.FunctionalTests.Hooks
+namespace SimplCommerce.FunctionalTests
 {
     [Binding]
     public class TestsSetup
@@ -18,7 +16,6 @@ namespace SimplCommerce.FunctionalTests.Hooks
             // Register the step definition classes
             // Use any class as typeof target that would be within the same project.
             services.TryAddSingleton<IWebDriver>(BuildDriver);
-            services.TryAddScoped<ShoppingCartPage>();
 
             return services;
         }
