@@ -26,9 +26,10 @@ namespace SimplCommerce.FunctionalTests.Hooks
         private static IWebDriver BuildDriver(IServiceProvider _)
         {
             var driver = new ChromeDriver();
-            // Wait 2 seconds for any element to appear to factor in loading times.
-            // Default wait time is none.
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
+            // Wait a bit for any element to appear to factor in loading times.
+            // Default wait time is 0.
+            // When you need to wait for more, use WaitDriver (from Selenium.WaitExtensions NuGet)
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMilliseconds(100);
             return driver;
         }
     }
