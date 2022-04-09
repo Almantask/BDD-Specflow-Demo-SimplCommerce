@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace SimplCommerce.FunctionalTests.Pages;
 
@@ -30,7 +31,8 @@ public class ProductPage : BasePage
 
     public ProductPage CloseProductAddedToCartModal()
     {
-        var closeButton = Driver.FindElement(By.ClassName("close"));
+        var waitDriver = new WebDriverWait(Driver, TimeSpan.FromMilliseconds(2000));
+        var closeButton = waitDriver.Until(driver => driver.FindElement(By.ClassName("close")));
         closeButton.Click();
 
         return this;

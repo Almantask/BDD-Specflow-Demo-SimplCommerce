@@ -29,7 +29,7 @@ namespace SimplCommerce.FunctionalTests.Hooks
             // Wait a bit for any element to appear to factor in loading times.
             // Default wait time is 0.
             // When you need to wait for more, use WaitDriver (from Selenium.WaitExtensions NuGet)
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMilliseconds(100);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMilliseconds(1000);
             return driver;
         }
     }

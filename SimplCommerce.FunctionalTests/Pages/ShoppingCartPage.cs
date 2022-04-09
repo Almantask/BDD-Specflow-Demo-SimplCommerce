@@ -1,5 +1,7 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 using SimplCommerce.FunctionalTests.Extensions;
 
 namespace SimplCommerce.FunctionalTests.Pages
@@ -58,9 +60,6 @@ namespace SimplCommerce.FunctionalTests.Pages
             return this;
         }
 
-        private IWebElement FindButton(string text)
-            => Driver.FindElement(By.XPath($"//button[text()='{text}']"));
-
         public ShoppingCartPage SetProductQuantityTo(string item, int quantity)
         {
             var product = FindProduct(item);
@@ -70,13 +69,14 @@ namespace SimplCommerce.FunctionalTests.Pages
             // Quantity cannot be set directly due to how model binding works for angular.
             // It does not update if quantity through html is updated.
             // Need to update model binding.
+            const int maxClickRetries = 5;
             if (difference > 0)
             {
                 for (int i = 0; i < difference; i++)
                 {
                     // In a loop, because after a click page refreshes.
                     var incrementQuantityButton = FindButton("+");
-                    incrementQuantityButton.Click();
+                    incrementQuantityButton.TryClicking(maxClickRetries);
                 }
             }
             else
@@ -85,13 +85,23 @@ namespace SimplCommerce.FunctionalTests.Pages
                 {
                     // In a loop, because after a click page refreshes.
                     var decrementQuantityButton = FindButton("-");
-                    decrementQuantityButton.Click();
+                    decrementQuantityButton.TryClicking(maxClickRetries);
                 }
             }
 
             return this;
         }
 
+        private IWebElement FindButton(string text)
+        {
+            // In order to prevent Stale Element Reference Exception.
+            var waitDriver = new WebDriverWait(Driver, TimeSpan.FromMilliseconds(500));
+            // This doesn't seem to help
+            var button = waitDriver.Until(
+                ExpectedConditions.ElementToBeClickable(
+                    By.XPath($"//button[text()='{text}']")));
 
+            return button;
+        }
     }
 }

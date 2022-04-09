@@ -18,11 +18,13 @@ Scenario: Cannot remove a product from a basket by decrementing quantity
     When Ausra decrements product quantity
     Then product quantity should be unchanged
 
+@ignore
 Scenario: Increment quantity when enough products in stock
     Given enough products in stock
     When Ausra increments product quantity
     Then product quantity should be incremented
 
+@ignore
 Scenario: Increment quantity is not allowed when not enough products in stock
     Given not enough products in stock
     When Ausra increments product quantity
@@ -53,6 +55,7 @@ Examples:
     | Arithmetics          | 1+1            |
     | Blank                |                |
 
+@ignore
 Scenario: Quantity update will update total cost
     When Ausra sets product quantity
     Then shopping cart display Subtotal and Order Total should be updated
