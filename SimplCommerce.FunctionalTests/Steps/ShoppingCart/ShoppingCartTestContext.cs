@@ -6,13 +6,12 @@
         public const string ExpectedOnlyProduct = "Square Neck Back";
         public const string ExpectedOnlyProductFullName = "Square Neck Back Silver S";
 
-
-        public static void SetProductQuantity(this ScenarioContext context, int quantity)
+        public static void SetInitialProductQuantity(this ScenarioContext context, int quantity)
         {
             context.Add(ExpectedOnlyProduct, quantity);
         }
 
-        public static int GetProductQuantity(this ScenarioContext context)
+        public static int GetInitialProductQuantity(this ScenarioContext context)
         {
             return (int)context[ExpectedOnlyProduct];
         }

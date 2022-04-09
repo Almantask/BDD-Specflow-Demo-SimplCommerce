@@ -36,7 +36,7 @@ namespace SimplCommerce.FunctionalTests.Steps.ShoppingCart
                 _navigationBar.NavigateToShoppingCart();
             }
 
-            _context.SetProductQuantity(quantity);
+            _context.SetInitialProductQuantity(quantity);
         }
     }
 }

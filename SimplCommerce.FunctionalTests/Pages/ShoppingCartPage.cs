@@ -39,8 +39,7 @@ namespace SimplCommerce.FunctionalTests.Pages
 
         private int FindProductQuantity(IWebElement? productElement)
         {
-            var quantityElement = productElement?.FindElement(
-                    By.CssSelector(".quantity-field.ng-pristine.ng-untouched.ng-valid.ng-not-empty"));
+            var quantityElement = FindProductQuantityElement(productElement);
             var quantityValue = quantityElement?.GetAttribute("value");
 
             return string.IsNullOrWhiteSpace(quantityValue) ? 0 : int.Parse(quantityValue);
@@ -60,9 +59,19 @@ namespace SimplCommerce.FunctionalTests.Pages
             return this;
         }
 
-        public ShoppingCartPage SetProductQuantityTo(string item, int quantity)
+        public ShoppingCartPage SetProductQuantityTo(string name, string quantity)
         {
-            var product = FindProduct(item);
+            var product = FindProduct(name);
+            var productQuantity = FindProductQuantityElement(product);
+
+            productQuantity?.SendKeys(quantity);
+
+            return this;
+        }
+
+        public ShoppingCartPage SetProductQuantityTo(string name, int quantity)
+        {
+            var product = FindProduct(name);
             var currentQuantity = FindProductQuantity(product);
 
             var difference = quantity - currentQuantity;
@@ -103,5 +112,10 @@ namespace SimplCommerce.FunctionalTests.Pages
 
             return button;
         }
+
+        private IWebElement? FindProductQuantityElement(IWebElement? productElement)
+            => productElement?.FindElement(
+                By.CssSelector(".quantity-field.ng-pristine.ng-untouched.ng-valid.ng-not-empty"));
+
     }
 }

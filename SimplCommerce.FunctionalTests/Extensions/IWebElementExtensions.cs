@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
 
 namespace SimplCommerce.FunctionalTests.Extensions
 {
@@ -24,6 +25,11 @@ namespace SimplCommerce.FunctionalTests.Extensions
                 {
                     maxTries--;
                 }
+            }
+
+            if (maxTries == 0)
+            {
+                Assert.Fail($"Failed to click {element?.Text}");
             }
 
             return element;

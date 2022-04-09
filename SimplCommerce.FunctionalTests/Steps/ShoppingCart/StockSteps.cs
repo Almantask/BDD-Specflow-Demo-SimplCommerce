@@ -21,7 +21,7 @@ namespace SimplCommerce.FunctionalTests.Steps.ShoppingCart
         public void GivenNotEnoughProductsInStock()
         {
             var quantityInStock = StockRepository.GetProductQuantityInStock(ExpectedOnlyProductFullName);
-            var quantityInShoppingCart = _context.GetProductQuantity();
+            var quantityInShoppingCart = _context.GetInitialProductQuantity();
             if (quantityInStock > quantityInShoppingCart)
             {
                 StockRepository.UpdateStock(ExpectedOnlyProduct, quantityInShoppingCart);
@@ -33,7 +33,7 @@ namespace SimplCommerce.FunctionalTests.Steps.ShoppingCart
         public void GivenEnoughProductsInStock()
         {
             var quantityInStock = StockRepository.GetProductQuantityInStock(ExpectedOnlyProductFullName);
-            var quantityInShoppingCart = _context.GetProductQuantity();
+            var quantityInShoppingCart = _context.GetInitialProductQuantity();
             if (quantityInStock <= quantityInShoppingCart)
             {
                 StockRepository.UpdateStock(ExpectedOnlyProduct, quantityInShoppingCart + 1);
