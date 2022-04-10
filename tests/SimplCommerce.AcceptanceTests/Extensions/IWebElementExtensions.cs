@@ -1,5 +1,5 @@
-﻿using NUnit.Framework;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
+using SimplCommerce.AcceptanceTests.Utils;
 
 namespace SimplCommerce.AcceptanceTests.Extensions
 {
@@ -22,31 +22,24 @@ namespace SimplCommerce.AcceptanceTests.Extensions
         public static IWebElement? GetParent(this IWebElement? webElement)
             => webElement?.FindElement(By.XPath(".//.."));
 
+
         /// <summary>
-        /// When a page refreshes a WebElement might be in a stale state.
+        /// When a page refreshes a <see cref="WebElement"/> might be in a stale state.
         /// A retry might be required.
+        /// Interacting with an element may not be enough.
+        /// You also might need to provide a selector.
         /// </summary>
-        /// <returns></returns>
-        public static IWebElement? TryClicking(this IWebElement? element, int maxTries)
-        {
-            while (maxTries > 0)
-            {
-                try
-                {
-                    element?.Click();
-                }
-                catch (StaleElementReferenceException)
-                {
-                    maxTries--;
-                }
-            }
+        public static void Try(this IWebElement? element, Action<IWebElement?> action, int maxTries = TestsSetup.Config.MaxRetries)
+            => StaleElementAccessor.Try(() => element, action, maxTries);
 
-            if (maxTries == 0)
-            {
-                Assert.Fail($"Failed to click {element?.Text}");
-            }
+        /// <summary>
+        /// When a page refreshes a <see cref="WebElement"/> might be in a stale state.
+        /// A retry might be required.
+        /// Interacting with an element may not be enough.
+        /// You also might need to provide a selector.
+        /// </summary>
+        public static IWebElement? Try(this IWebElement? element, Func<IWebElement?, IWebElement?> selector, int maxTries = TestsSetup.Config.MaxRetries)
+            => StaleElementAccessor.TryFind(() => element, selector, maxTries);
 
-            return element;
-        }
     }
 }

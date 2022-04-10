@@ -59,33 +59,31 @@ namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
         [Then(@"product quantity should be decremented")]
         public void ThenProductQuantityShouldBeDecremented()
         {
-            ProductQuantityShouldBe((original, current) => current < original);
+            ProductQuantityShouldBe((original, current) => current.Should().BeLessThan(original));
         }
 
         [Then(@"product quantity should be unchanged")]
         public void ThenProductQuantityShouldBeUnchanged()
         {
-            ProductQuantityShouldBe((original, current) => current == original);
+            ProductQuantityShouldBe((original, current) => current.Should().Be(original));
         }
 
         [Then(@"product quantity should be incremented")]
         public void ThenProductQuantityShouldBeIncremented()
         {
-            ProductQuantityShouldBe((original, current) => current > original);
+            ProductQuantityShouldBe((original, current) => current.Should().BeGreaterThan(original));
         }
 
         /// <summary>
         /// Verifies that original product quantity compared to original meets specified condition.
         /// </summary>
         /// <param name="condition">original, current</param>
-        private void ProductQuantityShouldBe(Func<int, int, bool> condition)
+        private void ProductQuantityShouldBe(Action<int, int> assertion)
         {
             var originalQuantity = _context.GetInitialProductQuantity();
             var currentQuantity = _shoppingCartPage.GetProductQuantity(ExpectedOnlyProduct);
 
-            var isConditionMet = condition(originalQuantity, currentQuantity);
-            Assert.True(isConditionMet, $"Item quantity is not as expected.{Environment.NewLine}" +
-                                        $"Original: {originalQuantity} Current: {currentQuantity}.");
+            assertion(originalQuantity, currentQuantity);
         }
     }
 }

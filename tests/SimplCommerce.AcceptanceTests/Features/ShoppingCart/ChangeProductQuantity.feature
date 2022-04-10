@@ -8,26 +8,22 @@ So that I can choose how many products I want to buy without going back to a sho
 Background:
     Given Shopping cart contains a product
 
-@ignore
 Scenario: Decrement quantity when product quantity in shopping cart is enough
     Given product quantity is at least 2
     When Ausra decrements product quantity
     Then product quantity should be decremented
 
-@ignore
 Scenario: Cannot remove a product from a basket by decrementing quantity
     Given product quantity is 1
     When Ausra decrements product quantity
     Then product quantity should be unchanged
 
-@ignore
 @Stock
 Scenario: Increment quantity when enough products in stock
     Given enough products in stock
     When Ausra increments product quantity
     Then product quantity should be incremented
 
-@ignore
 @Stock
 Scenario: Increment quantity is not allowed when not enough products in stock
     Given not enough products in stock

@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using SimplCommerce.AcceptanceTests.Extensions;
 using SimplCommerce.AcceptanceTests.HtmlElements;
+using SimplCommerce.AcceptanceTests.Utils;
 
 namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart
 {
@@ -27,11 +28,15 @@ namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart
             // /html/body/div[4]/div/div[1]/table/tbody/tr[1]/td[2]/h6
             // https://stackoverflow.com/questions/3655549/xpath-containstext-some-string-doesnt-work-when-used-with-node-with-more
             // http://xpather.com/uM2nm4x2 - surprisingly, http but the only one that works with html.
-            _table.Body.TryFindElement(
-                By.XPath($"./tr/td[2]/h6//text()[contains(.,'{product}')]"),
-                out var productHeader);
+
             // parent(td), parent(tr)
-            var productElement = productHeader?.GetParent()?.GetParent();
+            var productElement = StaleElementAccessor.TryFind(
+                () =>
+                {
+                    _table.Body.TryFindElement(By.XPath($"./tr/td[2]//h6[contains(text(),'{product}')]"), out var result);
+                    return result;
+                },
+                (header) => header?.GetParent()?.GetParent());
 
             return productElement;
         }

@@ -1,5 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 
+using static SimplCommerce.AcceptanceTests.TestsSetup;
+
 namespace SimplCommerce.AcceptanceTests.Db
 {
     public static class StockRepository
@@ -16,7 +18,7 @@ namespace SimplCommerce.AcceptanceTests.Db
                           ON Stock.ProductId = Product.Id
                           where Product.Name = @product";
 
-            using var connection = new SqlConnection(Constants.ConnectionString);
+            using var connection = new SqlConnection(Config.ConnectionString);
             connection.Open();
             var cmd = new SqlCommand(sql, connection);
             var param = new SqlParameter("@product", product);
@@ -34,7 +36,7 @@ namespace SimplCommerce.AcceptanceTests.Db
                           ON Stock.ProductId = Product.Id
                           where Product.Name = @product";
 
-            using var connection = new SqlConnection(Constants.ConnectionString);
+            using var connection = new SqlConnection(Config.ConnectionString);
             connection.Open();
             var cmd = new SqlCommand(sql, connection);
             var param1 = new SqlParameter("@product", product);

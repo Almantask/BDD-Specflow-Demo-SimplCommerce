@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using SimplCommerce.AcceptanceTests.Extensions;
+using SimplCommerce.AcceptanceTests.Utils;
 
 namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart
 {
@@ -24,15 +25,13 @@ namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart
 
         public ShoppingCartPage DecrementQuantity(string expectedOnlyProduct)
         {
-            var decrementQuantityButton = FindButton("-");
-            decrementQuantityButton.Click();
+            ClickButtonOnAProduct(expectedOnlyProduct, "-");
             return this;
         }
 
         public ShoppingCartPage IncrementQuantity(string expectedOnlyProduct)
         {
-            var incrementQuantityButton = FindButton("+");
-            incrementQuantityButton.Click();
+            ClickButtonOnAProduct(expectedOnlyProduct, "+");
             return this;
         }
 
@@ -47,29 +46,24 @@ namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart
 
         public ShoppingCartPage SetProductQuantityTo(string name, int quantity)
         {
-            var product = FindProduct(name);
-            var difference = quantity - product.Quantity;
+            var productWebElement = FindProductWebElement(name);
+            var product = Product.FromWebElement(productWebElement);
 
-            // Quantity cannot be set directly due to how model binding works for angular.
-            // It does not update if quantity through html is updated.
-            // Need to update model binding.
-            const int maxClickRetries = 5;
+            var difference = quantity - product.Quantity;
             if (difference > 0)
             {
                 for (int i = 0; i < difference; i++)
                 {
-                    // In a loop, because after a click page refreshes.
-                    var incrementQuantityButton = FindButton("+");
-                    incrementQuantityButton.TryClicking(maxClickRetries);
+                    var incrementQuantityButton = FindButtonOnAProduct(productWebElement, "+");
+                    incrementQuantityButton.Try(e => e.Click());
                 }
             }
             else
             {
                 for (int i = difference; i < 0; i++)
                 {
-                    // In a loop, because after a click page refreshes.
-                    var decrementQuantityButton = FindButton("-");
-                    decrementQuantityButton.TryClicking(maxClickRetries);
+                    var decrementQuantityButton = FindButtonOnAProduct(productWebElement, "-");
+                    decrementQuantityButton.Try(e => e.Click());
                 }
             }
 
@@ -96,28 +90,35 @@ namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart
             return productsTable.FindProduct(name);
         }
 
-        private IWebElement FindProductWebElement(string name)
+        private IWebElement FindProductWebElement(string productName)
         {
             var productsHtmlTable = Driver.FindTableUsingBody(By.CssSelector(".table.table-striped.cart-items"));
             var productsTable = new ProductsTable(productsHtmlTable);
 
-            return productsTable.FindProductWebElement(name);
+            return productsTable.FindProductWebElement(productName);
         }
 
-        private IWebElement FindButton(string text)
+        private IWebElement FindButtonOnAProduct(string productName, string text)
         {
-            // In order to prevent Stale Element Reference Exception.
-            var waitDriver = new WebDriverWait(Driver, TimeSpan.FromMilliseconds(500));
-            // This doesn't seem to help
-            var button = waitDriver.Until(
-                ExpectedConditions.ElementToBeClickable(
-                    By.XPath($"//button[text()='{text}']")));
+            var product = FindProductWebElement(productName);
+            return product.FindElement(By.XPath($"//button[text()='{text}']"));
+        }
 
-            return button;
+        private IWebElement FindButtonOnAProduct(IWebElement productWebElement, string text)
+        {
+            return productWebElement.FindElement(By.XPath($"//button[text()='{text}']"));
         }
 
         private IWebElement? FindProductQuantityElement(IWebElement? productElement)
             => productElement?.FindElement(
                 By.CssSelector(".quantity-field.ng-pristine.ng-untouched.ng-valid.ng-not-empty"));
+
+        private void ClickButtonOnAProduct(string product, string button)
+        {
+            StaleElementAccessor.Try(
+                () => FindButtonOnAProduct(product, button),
+                decrementQuantityButton => decrementQuantityButton.Click()
+            );
+        }
     }
 }

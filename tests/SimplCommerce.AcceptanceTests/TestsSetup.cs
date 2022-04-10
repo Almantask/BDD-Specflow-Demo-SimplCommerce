@@ -9,6 +9,24 @@ namespace SimplCommerce.AcceptanceTests
     [Binding]
     public class TestsSetup
     {
+        // TODO: Move to appSettings.json.
+        /// <summary>
+        /// 
+        /// </summary>
+        public static class Config
+        {
+            public const string ConnectionString = $"Server=.\\SQLEXPRESS;Database=SimplCommerce;Trusted_Connection=True;";
+
+            /// <summary>
+            /// Regardless of page loading, some elements don't appear fast enough.
+            /// Therefore when interacting with them, you will get StaleElementReferenceException.
+            /// Retrying a few times seems to help.
+            /// </summary>
+            public const int MaxRetries = 5;
+        }
+
+
+
         [ScenarioDependencies]
         public static IServiceCollection CreateServices()
         {

@@ -9,19 +9,23 @@ public record Product(string? Name, decimal Price, short Quantity)
     {
         if (productElement == null) return NotFound();
 
-        var name = FindValueByXpath<string>("./td[2]/h6");
-        var price = FindValueByXpath<decimal>("./td[3]", InputSanitizers.Money);
-        var quantity = FindValueByXpath<short>(".td[4]/input");
+        var name = productElement
+            .FindElement(By.XPath("./td[2]/h6"))
+            .Text;
+
+        var price = productElement
+            .FindElement(By.XPath("./td[3]"))
+            .Text
+            .ConvertTo<decimal>(InputSanitizers.Money);
+
+        var quantity = productElement
+            .FindElement(By.XPath("./td[4]/input"))
+            .GetAttribute("value")
+            .ConvertTo<short>();
 
         return new Product(name, price, quantity);
-
-        T FindValueByXpath<T>(string xpath, Func<string, string>? sanitize = null)
-        {
-            var text = productElement.FindElement(By.XPath(xpath)).Text;
-            return text.ConvertTo<T>(sanitize);
-        }
     }
 
     public static Product NotFound()
-        => new Product(default, default, default);
+        => new (default, default, default);
 }
