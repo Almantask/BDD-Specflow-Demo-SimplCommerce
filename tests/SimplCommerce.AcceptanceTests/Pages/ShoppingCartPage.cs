@@ -13,35 +13,16 @@ namespace SimplCommerce.AcceptanceTests.Pages
         {
         }
 
-        public int GetProductQuantity(string productName)
-        {
-            var productElement = FindProduct(productName);
-            return FindProductQuantity(productElement);
-        }
-
         public ShoppingCartPage NavigateTo()
         {
             Driver.Navigate().GoToUrl(Url);
             return this;
         }
 
-        private IWebElement? FindProduct(string name)
+        public int GetProductQuantity(string productName)
         {
-            var itemHeaders = Driver.FindElements(By.TagName("h6"));
-            // Contains name, because the name also has extras such as size (S/M/L/..) and color (Silver, Bronze...)
-            var itemHeader = itemHeaders.FirstOrDefault(ih => ih.Text.Contains(name));
-            // parent(td), parent(tr)
-            var itemLine = itemHeader?.GetParent().GetParent();
-
-            return itemLine;
-        }
-
-        private int FindProductQuantity(IWebElement? productElement)
-        {
-            var quantityElement = FindProductQuantityElement(productElement);
-            var quantityValue = quantityElement?.GetAttribute("value");
-
-            return string.IsNullOrWhiteSpace(quantityValue) ? 0 : int.Parse(quantityValue);
+            var productElement = FindProduct(productName);
+            return FindProductQuantity(productElement);
         }
 
         public ShoppingCartPage DecrementQuantity(string expectedOnlyProduct)
@@ -100,6 +81,41 @@ namespace SimplCommerce.AcceptanceTests.Pages
             return this;
         }
 
+        public OrderSummary GetOrderSummary()
+        {
+            var table = Driver.FindTable(By.CssSelector(".order-summary.ng-scope"));
+            var subtotal = table.GetValueOfElementAt<decimal>(1, 2);
+            var discount = table.GetValueOfElementAt<decimal>(2, 2);
+            var orderTotal = table.GetValueOfElementAt<decimal>(3, 2);
+            var orderSummary = new OrderSummary(subtotal, discount, orderTotal);
+
+            return orderSummary;
+        }
+
+        public decimal GetProductPrice(string expectedOnlyProduct)
+        {
+            throw new NotImplementedException();
+        }
+
+        private IWebElement? FindProduct(string name)
+        {
+            var itemHeaders = Driver.FindElements(By.TagName("h6"));
+            // Contains name, because the name also has extras such as size (S/M/L/..) and color (Silver, Bronze...)
+            var itemHeader = itemHeaders.FirstOrDefault(ih => ih.Text.Contains(name));
+            // parent(td), parent(tr)
+            var itemLine = itemHeader?.GetParent().GetParent();
+
+            return itemLine;
+        }
+
+        private int FindProductQuantity(IWebElement? productElement)
+        {
+            var quantityElement = FindProductQuantityElement(productElement);
+            var quantityValue = quantityElement?.GetAttribute("value");
+
+            return string.IsNullOrWhiteSpace(quantityValue) ? 0 : int.Parse(quantityValue);
+        }
+
         private IWebElement FindButton(string text)
         {
             // In order to prevent Stale Element Reference Exception.
@@ -116,24 +132,6 @@ namespace SimplCommerce.AcceptanceTests.Pages
             => productElement?.FindElement(
                 By.CssSelector(".quantity-field.ng-pristine.ng-untouched.ng-valid.ng-not-empty"));
 
-        public decimal GetSubtotal()
-        {
-            throw new NotImplementedException();
-        }
-
-        public decimal GetDiscount()
-        {
-            throw new NotImplementedException();
-        }
-
-        public decimal GetOrderTotal()
-        {
-            throw new NotImplementedException();
-        }
-
-        public decimal GetProductPrice(string expectedOnlyProduct)
-        {
-            throw new NotImplementedException();
-        }
+        public record OrderSummary(decimal Subtotal, decimal Discount, decimal OrderTotal);
     }
 }

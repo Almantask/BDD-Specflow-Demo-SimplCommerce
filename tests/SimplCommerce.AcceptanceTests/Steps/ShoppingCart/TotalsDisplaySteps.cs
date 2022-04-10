@@ -12,9 +12,7 @@ namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
         private readonly ScenarioContext _context;
         private readonly ShoppingCartPage _page;
 
-        private decimal _initialSubtotal;
-        private decimal _initialDiscount;
-        private decimal _initialOrderTotal;
+        private ShoppingCartPage.OrderSummary? _initialOrderSummary;
 
         public TotalsDisplaySteps(IWebDriver driver, ScenarioContext context)
         {
@@ -25,11 +23,9 @@ namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
         [Then(@"shopping cart display Subtotal and Order Total should be updated")]
         public void ThenShoppingCartDisplaySubtotalAndOrderTotalShouldBeUpdated()
         {
-            var currentSubtotal = _page.GetSubtotal();
-            var currentDiscount = _page.GetDiscount();
-            var currentOrderTotal = _page.GetOrderTotal();
+            var currentOrderSummary = _page.GetOrderSummary();
 
-            currentDiscount.Should().Be(_initialDiscount);
+            currentOrderSummary.Discount.Should().Be(_initialOrderSummary.Discount);
 
             var initialProductQuantity = _context.GetInitialProductQuantity();
             var currentProductQuantity = _page.GetProductQuantity(ExpectedOnlyProduct);
@@ -37,19 +33,17 @@ namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
 
             var productPrice = _page.GetProductPrice(ExpectedOnlyProduct);
             var productTotalPriceDifference = productPrice * quantityDifference;
-            var expectedSubTotal = _initialSubtotal + productTotalPriceDifference;
-            var expectedOrderTotal = _initialOrderTotal + productTotalPriceDifference;
+            var expectedSubTotal = _initialOrderSummary.Subtotal + productTotalPriceDifference;
+            var expectedOrderTotal = _initialOrderSummary.OrderTotal + productTotalPriceDifference;
 
-            currentSubtotal.Should().NotBe(expectedSubTotal);
-            currentOrderTotal.Should().NotBe(expectedOrderTotal);
+            currentOrderSummary.Subtotal.Should().NotBe(expectedSubTotal);
+            currentOrderSummary.OrderTotal.Should().NotBe(expectedOrderTotal);
         }
 
         [BeforeScenario(OrderSummaryTag)]
         public void SetInitialOrderSummary()
         {
-            _initialSubtotal = _page.GetSubtotal();
-            _initialDiscount = _page.GetDiscount();
-            _initialOrderTotal = _page.GetOrderTotal();
+            _initialOrderSummary = _page.GetOrderSummary();
         }
     }
 }
