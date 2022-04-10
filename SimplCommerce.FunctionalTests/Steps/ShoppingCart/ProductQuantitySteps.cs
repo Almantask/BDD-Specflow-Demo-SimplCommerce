@@ -1,9 +1,9 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
-using SimplCommerce.FunctionalTests.Pages;
-using static SimplCommerce.FunctionalTests.Steps.ShoppingCart.ShoppingCartTestContext;
+using SimplCommerce.AcceptanceTests.Pages;
+using static SimplCommerce.AcceptanceTests.Steps.ShoppingCart.ShoppingCartTestContext;
 
-namespace SimplCommerce.FunctionalTests.Steps.ShoppingCart
+namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
 {
     [Binding]
     public class ProductQuantitySteps

@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
 
-namespace SimplCommerce.FunctionalTests.Extensions
+namespace SimplCommerce.AcceptanceTests.Extensions
 {
     public static class IWebElementExtensions
     {

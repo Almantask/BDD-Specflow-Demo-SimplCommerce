@@ -4,7 +4,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using SolidToken.SpecFlow.DependencyInjection;
 
-namespace SimplCommerce.FunctionalTests
+namespace SimplCommerce.AcceptanceTests
 {
     [Binding]
     public class TestsSetup

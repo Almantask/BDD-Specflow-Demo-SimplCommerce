@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 
-namespace SimplCommerce.FunctionalTests.Pages
+namespace SimplCommerce.AcceptanceTests.Pages
 {
     public class NavigationBar : BasePage
     {

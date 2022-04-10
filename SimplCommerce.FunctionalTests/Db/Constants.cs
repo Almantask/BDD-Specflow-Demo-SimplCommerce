@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SimplCommerce.FunctionalTests.Db
+﻿namespace SimplCommerce.AcceptanceTests.Db
 {
     public static class Constants
     {

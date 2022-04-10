@@ -1,10 +1,9 @@
-﻿using NUnit.Framework;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using SimplCommerce.FunctionalTests.Extensions;
+using SimplCommerce.AcceptanceTests.Extensions;
 
-namespace SimplCommerce.FunctionalTests.Pages
+namespace SimplCommerce.AcceptanceTests.Pages
 {
     public class ShoppingCartPage : BasePage
     {

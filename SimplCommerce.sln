@@ -124,7 +124,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimplCommerce.Module.Paymen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimplCommerce.Module.PaymentCashfree", "src\Modules\SimplCommerce.Module.PaymentCashfree\SimplCommerce.Module.PaymentCashfree.csproj", "{E30CF10F-FABF-4917-8BEB-CB81E4CE2C92}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimplCommerce.FunctionalTests", "SimplCommerce.FunctionalTests\SimplCommerce.FunctionalTests.csproj", "{05722576-7AB0-42C2-95BF-C8CBD6C49075}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimplCommerce.AcceptanceTests", "SimplCommerce.FunctionalTests\SimplCommerce.AcceptanceTests.csproj", "{05722576-7AB0-42C2-95BF-C8CBD6C49075}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

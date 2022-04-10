@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
-namespace SimplCommerce.FunctionalTests.Pages;
+namespace SimplCommerce.AcceptanceTests.Pages;
 
 public class ProductPage : BasePage
 {

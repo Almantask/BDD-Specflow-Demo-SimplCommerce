@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 
-namespace SimplCommerce.FunctionalTests.Db
+namespace SimplCommerce.AcceptanceTests.Db
 {
     public static class StockRepository
     {
