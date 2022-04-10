@@ -1,15 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using SimplCommerce.AcceptanceTests.HtmlElements;
 
 namespace SimplCommerce.AcceptanceTests.Extensions
 {
     public static class IWebDriverExtensions
     {
+        public static bool TryFindElement(this IWebDriver driver, By by, out IWebElement? result)
+        {
+            try
+            {
+                result = driver.FindElement(by);
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                result = null;
+                return false;
+            }
+        }
+
         public static HtmlTable FindTableUsingWrapper(this IWebDriver driver, By by)
         {
             var tableWrapper = driver.FindElement(by);

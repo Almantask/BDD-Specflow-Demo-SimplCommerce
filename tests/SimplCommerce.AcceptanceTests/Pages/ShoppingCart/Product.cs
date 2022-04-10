@@ -3,10 +3,12 @@ using SimplCommerce.AcceptanceTests.Extensions;
 
 namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart;
 
-public record Product(string Name, decimal Price, short Quantity)
+public record Product(string? Name, decimal Price, short Quantity)
 {
-    public static Product FromWebElement(IWebElement productElement)
+    public static Product FromWebElement(IWebElement? productElement)
     {
+        if (productElement == null) return NotFound();
+
         var name = FindValueByXpath<string>("./td[2]/h6");
         var price = FindValueByXpath<decimal>("./td[3]", InputSanitizers.Money);
         var quantity = FindValueByXpath<short>(".td[4]/input");
@@ -19,4 +21,7 @@ public record Product(string Name, decimal Price, short Quantity)
             return text.ConvertTo<T>(sanitize);
         }
     }
+
+    public static Product NotFound()
+        => new Product(default, default, default);
 }
