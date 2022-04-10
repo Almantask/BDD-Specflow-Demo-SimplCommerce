@@ -19,6 +19,10 @@ namespace SimplCommerce.AcceptanceTests.Extensions
             }
         }
 
+        /// <summary>
+        /// Find element under which there is table
+        /// </summary>
+        /// <returns></returns>
         public static HtmlTable FindTableUsingWrapper(this IWebDriver driver, By by)
         {
             var tableWrapper = driver.FindElement(by);
@@ -26,6 +30,9 @@ namespace SimplCommerce.AcceptanceTests.Extensions
             return HtmlTable.FromWrapperElement(tableWrapper);
         }
 
+        /// <summary>
+        /// Find table element itself.
+        /// </summary>
         public static HtmlTable FindTableUsingBody(this IWebDriver driver, By by)
         {
             var tableElement = driver.FindElement(by);
