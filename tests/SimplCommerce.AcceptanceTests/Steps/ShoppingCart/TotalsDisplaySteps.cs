@@ -2,6 +2,10 @@
 using SimplCommerce.AcceptanceTests.Pages;
 using static SimplCommerce.AcceptanceTests.Steps.ShoppingCart.ShoppingCartTestContext;
 
+// Not an issue, the variable is set in the hook [BeforeScenario].
+// It is run before the other steps.
+#pragma warning disable CS8618
+
 namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
 {
     [Binding]
@@ -12,7 +16,7 @@ namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
         private readonly ScenarioContext _context;
         private readonly ShoppingCartPage _page;
 
-        private ShoppingCartPage.OrderSummary? _initialOrderSummary;
+        private ShoppingCartPage.OrderSummary _initialOrderSummary;
 
         public TotalsDisplaySteps(IWebDriver driver, ScenarioContext context)
         {
@@ -23,27 +27,30 @@ namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
         [Then(@"shopping cart display Subtotal and Order Total should be updated")]
         public void ThenShoppingCartDisplaySubtotalAndOrderTotalShouldBeUpdated()
         {
-            var currentOrderSummary = _page.GetOrderSummary();
-
-            currentOrderSummary.Discount.Should().Be(_initialOrderSummary.Discount);
-
-            var initialProductQuantity = _context.GetInitialProductQuantity();
-            var currentProductQuantity = _page.GetProductQuantity(ExpectedOnlyProduct);
-            var quantityDifference = currentProductQuantity - initialProductQuantity;
-
-            var productPrice = _page.GetProductPrice(ExpectedOnlyProduct);
-            var productTotalPriceDifference = productPrice * quantityDifference;
+            var productTotalPriceDifference = GetTotalPriceDifference();
             var expectedSubTotal = _initialOrderSummary.Subtotal + productTotalPriceDifference;
             var expectedOrderTotal = _initialOrderSummary.OrderTotal + productTotalPriceDifference;
 
-            currentOrderSummary.Subtotal.Should().NotBe(expectedSubTotal);
-            currentOrderSummary.OrderTotal.Should().NotBe(expectedOrderTotal);
+            var expectedOrderSummary = new ShoppingCartPage.OrderSummary(expectedSubTotal, _initialOrderSummary.Discount, expectedOrderTotal);
+            var currentOrderSummary = _page.GetOrderSummary();
+            currentOrderSummary.Should().BeEquivalentTo(expectedOrderSummary);
         }
 
         [BeforeScenario(OrderSummaryTag)]
         public void SetInitialOrderSummary()
         {
             _initialOrderSummary = _page.GetOrderSummary();
+        }
+
+        private decimal GetTotalPriceDifference()
+        {
+            var initialProductQuantity = _context.GetInitialProductQuantity();
+            var currentProductQuantity = _page.GetProductQuantity(ExpectedOnlyProduct);
+            var quantityDifference = currentProductQuantity - initialProductQuantity;
+
+            var productPrice = _page.GetProductPrice(ExpectedOnlyProduct);
+
+            return productPrice * quantityDifference;
         }
     }
 }
