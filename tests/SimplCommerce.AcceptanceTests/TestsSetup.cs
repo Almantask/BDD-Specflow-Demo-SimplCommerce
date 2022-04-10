@@ -1,18 +1,18 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using SolidToken.SpecFlow.DependencyInjection;
 
 namespace SimplCommerce.AcceptanceTests
 {
     [Binding]
     public class TestsSetup
     {
-        // TODO: Move to appSettings.json.
         /// <summary>
-        /// 
+        /// A static driver is needed because SpecFlow does not support a global context DI.
+        /// It only supports it at a Scenario level.
         /// </summary>
+        public static IWebDriver Driver { get; private set; }
+
+        // TODO: Move to appSettings.json.
         public static class Config
         {
             public const string ConnectionString = $"Server=.\\SQLEXPRESS;Database=SimplCommerce;Trusted_Connection=True;";
@@ -25,20 +25,19 @@ namespace SimplCommerce.AcceptanceTests
             public const int MaxRetries = 5;
         }
 
-
-
-        [ScenarioDependencies]
-        public static IServiceCollection CreateServices()
+        [BeforeTestRun]
+        public static void InitializeDependencies()
         {
-            var services = new ServiceCollection();
-            // Register the step definition classes
-            // Use any class as typeof target that would be within the same project.
-            services.TryAddSingleton<IWebDriver>(BuildDriver);
-
-            return services;
+            Driver = BuildDriver();
         }
 
-        private static IWebDriver BuildDriver(IServiceProvider _)
+        [AfterTestRun]
+        public static void CleanupDependencies()
+        {
+            Driver.Dispose();
+        }
+
+        private static IWebDriver BuildDriver()
         {
             var driver = new ChromeDriver();
             // Wait a bit for any element to appear to factor in loading times.

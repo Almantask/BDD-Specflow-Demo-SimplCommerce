@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using SimplCommerce.AcceptanceTests.Pages.ShoppingCart;
 using static SimplCommerce.AcceptanceTests.Steps.ShoppingCart.ShoppingCartTestContext;
+using static SimplCommerce.AcceptanceTests.TestsSetup;
 
 namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
 {
@@ -11,10 +12,10 @@ namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
         private readonly ScenarioContext _context;
         private readonly ShoppingCartPage _shoppingCartPage;
 
-        public ProductQuantitySteps(IWebDriver webDriver, ScenarioContext context)
+        public ProductQuantitySteps(ScenarioContext context)
         {
             _context = context;
-            _shoppingCartPage = new ShoppingCartPage(webDriver);
+            _shoppingCartPage = new ShoppingCartPage(Driver);
             // Implied that all that is run will run in the context of ShoppingCartPage.
             _shoppingCartPage.NavigateTo();
         }
@@ -84,6 +85,15 @@ namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
             var currentQuantity = _shoppingCartPage.GetProductQuantity(ExpectedOnlyProduct);
 
             assertion(originalQuantity, currentQuantity);
+        }
+
+        [AfterStep]
+        public void UpdateInitialQuantity()
+        {
+            if (!_context.StepContext.StepInfo.Text.Contains("product quantity is")) return;
+
+            var quantity = _shoppingCartPage.GetProductQuantity(ExpectedOnlyProduct);
+            _context.SetInitialProductQuantity(quantity);
         }
     }
 }

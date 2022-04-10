@@ -38,7 +38,7 @@ namespace SimplCommerce.AcceptanceTests.Extensions
         /// Interacting with an element may not be enough.
         /// You also might need to provide a selector.
         /// </summary>
-        public static IWebElement? Try(this IWebElement? element, Func<IWebElement?, IWebElement?> selector, int maxTries = TestsSetup.Config.MaxRetries)
+        public static IWebElement? TryFind(this IWebElement? element, Func<IWebElement?, IWebElement?> selector, int maxTries = TestsSetup.Config.MaxRetries)
             => StaleElementAccessor.TryFind(() => element, selector, maxTries);
 
     }

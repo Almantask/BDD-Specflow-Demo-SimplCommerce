@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using SimplCommerce.AcceptanceTests.HtmlElements;
+using SimplCommerce.AcceptanceTests.Utils;
 
 namespace SimplCommerce.AcceptanceTests.Extensions
 {
@@ -35,8 +36,7 @@ namespace SimplCommerce.AcceptanceTests.Extensions
         /// </summary>
         public static HtmlTable FindTableUsingBody(this IWebDriver driver, By by)
         {
-            var tableElement = driver.FindElement(by);
-
+            var tableElement = StaleElementAccessor.TryFind(() => driver.FindElement(by));
             return HtmlTable.FromTableElement(tableElement);
         }
     }

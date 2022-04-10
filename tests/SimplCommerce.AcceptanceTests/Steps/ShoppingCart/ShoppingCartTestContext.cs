@@ -8,7 +8,14 @@
 
         public static void SetInitialProductQuantity(this ScenarioContext context, int quantity)
         {
-            context.Add(ExpectedOnlyProduct, quantity);
+            if (context.ContainsKey(ExpectedOnlyProduct))
+            {
+                context[ExpectedOnlyProduct] = quantity;
+            }
+            else
+            {
+                context.Add(ExpectedOnlyProduct, quantity);
+            }
         }
 
         public static int GetInitialProductQuantity(this ScenarioContext context)

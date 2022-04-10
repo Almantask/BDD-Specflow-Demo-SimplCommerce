@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using SimplCommerce.AcceptanceTests.Extensions;
+using SimplCommerce.AcceptanceTests.Utils;
 
 namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart;
 
@@ -27,5 +28,5 @@ public record Product(string? Name, decimal Price, short Quantity)
     }
 
     public static Product NotFound()
-        => new (default, default, default);
+        => new(default, default, default);
 }

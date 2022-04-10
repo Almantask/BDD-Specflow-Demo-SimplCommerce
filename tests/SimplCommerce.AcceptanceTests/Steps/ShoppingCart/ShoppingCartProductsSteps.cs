@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using SimplCommerce.AcceptanceTests.Pages;
 using static SimplCommerce.AcceptanceTests.Steps.ShoppingCart.ShoppingCartTestContext;
+using static SimplCommerce.AcceptanceTests.TestsSetup;
 
 namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
 {
@@ -10,9 +11,9 @@ namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
         private ScenarioContext _context;
         private readonly NavigationBar _navigationBar;
 
-        public ShoppingCartProductsSteps(IWebDriver driver, ScenarioContext context)
+        public ShoppingCartProductsSteps(ScenarioContext context)
         {
-            _navigationBar = new NavigationBar(driver);
+            _navigationBar = new NavigationBar(Driver);
             _context = context;
         }
 

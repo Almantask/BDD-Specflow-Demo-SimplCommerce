@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using SimplCommerce.AcceptanceTests.Pages.ShoppingCart;
 using static SimplCommerce.AcceptanceTests.Steps.ShoppingCart.ShoppingCartTestContext;
+using static SimplCommerce.AcceptanceTests.TestsSetup;
 
 // Not an issue, the variable is set in the hook [BeforeScenario].
 // It is run before the other steps.
@@ -11,16 +12,14 @@ namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
     [Binding]
     public class TotalsDisplaySteps
     {
-        private const string OrderSummaryTag = "OrderSummary";
-
         private readonly ScenarioContext _context;
         private readonly ShoppingCartPage _page;
 
         private OrderSummary _initialOrderSummary;
 
-        public TotalsDisplaySteps(IWebDriver driver, ScenarioContext context)
+        public TotalsDisplaySteps(ScenarioContext context)
         {
-            _page = new ShoppingCartPage(driver);
+            _page = new ShoppingCartPage(Driver);
             _context = context;
         }
 
@@ -36,7 +35,7 @@ namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
             currentOrderSummary.Should().BeEquivalentTo(expectedOrderSummary);
         }
 
-        [BeforeStep(OrderSummaryTag)]
+        [BeforeStep]
         public void SetInitialOrderSummary()
         {
             if (_context.StepContext.StepInfo.Text != "Ausra sets product quantity") return;

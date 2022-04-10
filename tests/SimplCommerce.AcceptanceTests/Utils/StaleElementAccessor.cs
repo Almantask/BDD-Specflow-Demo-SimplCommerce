@@ -31,10 +31,39 @@ namespace SimplCommerce.AcceptanceTests.Utils
         /// <summary>
         /// Try getting an element and then selecting something from it.
         /// </summary>
-        /// <returns>Element after selector is applied to it.</returns>
+        /// <returns>Element or parts of it after selector is applied to it.</returns>
         public static IWebElement TryFind(
             Func<IWebElement> findElement,
-            Func<IWebElement?, IWebElement> selector,
+            int maxTries = TestsSetup.Config.MaxRetries)
+        {
+            while (maxTries > 0)
+            {
+                try
+                {
+                    return findElement();
+                }
+                catch (StaleElementReferenceException ex)
+                {
+                    maxTries--;
+                }
+            }
+
+            if (maxTries == 0)
+            {
+                Assert.Fail($"Failed to interact with WebElement.");
+            }
+
+            // Should never go here.
+            return default;
+        }
+
+        /// <summary>
+        /// Try getting an element and then selecting something from it.
+        /// </summary>
+        /// <returns>Element or parts of it after selector is applied to it.</returns>
+        public static T? TryFind<T>(
+            Func<IWebElement> findElement,
+            Func<IWebElement?, T> selector,
             int maxTries = TestsSetup.Config.MaxRetries)
         {
             while (maxTries > 0)
@@ -56,7 +85,7 @@ namespace SimplCommerce.AcceptanceTests.Utils
             }
 
             // Should never go here.
-            return null;
+            return default;
         }
     }
 }

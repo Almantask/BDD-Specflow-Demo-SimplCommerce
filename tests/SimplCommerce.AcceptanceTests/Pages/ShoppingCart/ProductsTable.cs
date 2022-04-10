@@ -17,7 +17,7 @@ namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart
         public Product FindProduct(string product)
         {
             var productElement = FindProductWebElement(product);
-
+            
             return Product.FromWebElement(productElement);
         }
 
@@ -34,6 +34,9 @@ namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart
                 () =>
                 {
                     _table.Body.TryFindElement(By.XPath($"./tr/td[2]//h6[contains(text(),'{product}')]"), out var result);
+                    // make sure we can interact with it
+                    result?.Click();
+
                     return result;
                 },
                 (header) => header?.GetParent()?.GetParent());
