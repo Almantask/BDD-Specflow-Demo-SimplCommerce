@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using SimplCommerce.AcceptanceTests.Pages;
+using SimplCommerce.AcceptanceTests.Pages.ShoppingCart;
 using static SimplCommerce.AcceptanceTests.Steps.ShoppingCart.ShoppingCartTestContext;
 
 namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart

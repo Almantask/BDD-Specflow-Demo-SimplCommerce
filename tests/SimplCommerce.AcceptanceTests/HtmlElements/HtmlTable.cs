@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using SimplCommerce.AcceptanceTests.Extensions;
 
 namespace SimplCommerce.AcceptanceTests.HtmlElements
 {
@@ -7,15 +8,32 @@ namespace SimplCommerce.AcceptanceTests.HtmlElements
     /// </summary>
     public class HtmlTable
     {
-        private readonly IWebElement _body;
+        public IWebElement Body { get; }
+
+        /// <summary>
+        /// Initialize table from a wrapping element.
+        /// </summary>
+        public static HtmlTable FromWrapperElement(IWebElement wrapperElement)
+        {
+            var body = wrapperElement.FindElement(By.XPath(@"./table/tbody"));
+            return new HtmlTable(body);
+        }
+
+        /// <summary>
+        /// Initialize table from table element
+        /// </summary>
+        public static HtmlTable FromTableElement(IWebElement tableElement)
+        {
+            var body = tableElement.FindElement(By.XPath(@"./tbody"));
+            return new HtmlTable(body);
+        }
 
         /// <summary>
         /// Initializes accessor around table/body.
         /// </summary>
-        /// <param name="tableWrappingElement">Element which is expected to have element with xpath ./table/tbody.</param>
-        public HtmlTable(IWebElement tableWrappingElement)
+        private HtmlTable(IWebElement body)
         {
-            _body = tableWrappingElement.FindElement(By.XPath(@"./table/tbody"));
+            Body = body;
         }
 
         /// <summary>
@@ -27,11 +45,10 @@ namespace SimplCommerce.AcceptanceTests.HtmlElements
         /// <param name="row">tr of html table.</param>
         /// <param name="column">td of html table.</param>
         /// <returns></returns>
-        public T? GetValuetAt<T>(int row, int column, Func<string, string>? sanitize = null)
+        public T? GetValueAt<T>(int row, int column, Func<string, string>? sanitize = null)
         {
             var element = GetElementAt(row, column);
-            var value = sanitize?.Invoke(element.Text);
-            return (T)Convert.ChangeType(value, typeof(T))!;
+            return element.Text.ConvertTo<T>();
         }
 
         /// <summary>
@@ -43,6 +60,6 @@ namespace SimplCommerce.AcceptanceTests.HtmlElements
         /// <param name="column">td of html table.</param>
         /// <returns></returns>
         public IWebElement GetElementAt(int row, int column)
-            => _body.FindElement(By.XPath($"tr[{row}]/td[{column}]"));
+            => Body.FindElement(By.XPath($"tr[{row}]/td[{column}]"));
     }
 }

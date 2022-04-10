@@ -10,11 +10,18 @@ namespace SimplCommerce.AcceptanceTests.Extensions
 {
     public static class IWebDriverExtensions
     {
-        public static HtmlTable FindTable(this IWebDriver driver, By by)
+        public static HtmlTable FindTableUsingWrapper(this IWebDriver driver, By by)
         {
             var tableWrapper = driver.FindElement(by);
 
-            return new HtmlTable(tableWrapper);
+            return HtmlTable.FromWrapperElement(tableWrapper);
+        }
+
+        public static HtmlTable FindTableUsingBody(this IWebDriver driver, By by)
+        {
+            var tableElement = driver.FindElement(by);
+
+            return HtmlTable.FromTableElement(tableElement);
         }
     }
 }

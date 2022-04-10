@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using SimplCommerce.AcceptanceTests.Pages;
+using SimplCommerce.AcceptanceTests.Pages.ShoppingCart;
 using static SimplCommerce.AcceptanceTests.Steps.ShoppingCart.ShoppingCartTestContext;
 
 // Not an issue, the variable is set in the hook [BeforeScenario].
@@ -16,7 +17,7 @@ namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
         private readonly ScenarioContext _context;
         private readonly ShoppingCartPage _page;
 
-        private ShoppingCartPage.OrderSummary _initialOrderSummary;
+        private OrderSummary _initialOrderSummary;
 
         public TotalsDisplaySteps(IWebDriver driver, ScenarioContext context)
         {
@@ -31,7 +32,7 @@ namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
             var expectedSubTotal = _initialOrderSummary.Subtotal + productTotalPriceDifference;
             var expectedOrderTotal = _initialOrderSummary.OrderTotal + productTotalPriceDifference;
 
-            var expectedOrderSummary = new ShoppingCartPage.OrderSummary(expectedSubTotal, _initialOrderSummary.Discount, expectedOrderTotal);
+            var expectedOrderSummary = new OrderSummary(expectedSubTotal, _initialOrderSummary.Discount, expectedOrderTotal);
             var currentOrderSummary = _page.GetOrderSummary();
             currentOrderSummary.Should().BeEquivalentTo(expectedOrderSummary);
         }

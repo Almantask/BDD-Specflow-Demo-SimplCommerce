@@ -3,7 +3,7 @@ using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using SimplCommerce.AcceptanceTests.Extensions;
 
-namespace SimplCommerce.AcceptanceTests.Pages
+namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart
 {
     public class ShoppingCartPage : BasePage
     {
@@ -20,10 +20,7 @@ namespace SimplCommerce.AcceptanceTests.Pages
         }
 
         public int GetProductQuantity(string productName)
-        {
-            var productElement = FindProduct(productName);
-            return FindProductQuantity(productElement);
-        }
+            => FindProduct(productName).Quantity;
 
         public ShoppingCartPage DecrementQuantity(string expectedOnlyProduct)
         {
@@ -41,9 +38,8 @@ namespace SimplCommerce.AcceptanceTests.Pages
 
         public ShoppingCartPage SetProductQuantityTo(string name, string quantity)
         {
-            var product = FindProduct(name);
+            var product = FindProductWebElement(name);
             var productQuantity = FindProductQuantityElement(product);
-
             productQuantity?.SendKeys(quantity);
 
             return this;
@@ -52,9 +48,8 @@ namespace SimplCommerce.AcceptanceTests.Pages
         public ShoppingCartPage SetProductQuantityTo(string name, int quantity)
         {
             var product = FindProduct(name);
-            var currentQuantity = FindProductQuantity(product);
+            var difference = quantity - product.Quantity;
 
-            var difference = quantity - currentQuantity;
             // Quantity cannot be set directly due to how model binding works for angular.
             // It does not update if quantity through html is updated.
             // Need to update model binding.
@@ -83,46 +78,30 @@ namespace SimplCommerce.AcceptanceTests.Pages
 
         public OrderSummary GetOrderSummary()
         {
-            var table = Driver.FindTable(By.CssSelector(".order-summary.ng-scope"));
-
-            var subtotal = GetMoneyAtRow(1);
-            var discount = GetMoneyAtRow(2);
-            var orderTotal = GetMoneyAtRow(3);
-            var orderSummary = new OrderSummary(subtotal, discount, orderTotal);
-
-            return orderSummary;
-
-            decimal GetMoneyAtRow(int row)
-            {
-                const int priceColumn = 2;
-                return table.GetValuetAt<decimal>(row, priceColumn, Sanitize);
-
-                string Sanitize(string money) => money.Replace("$", "");
-            }
+            var table = Driver.FindTableUsingWrapper(By.CssSelector(".order-summary.ng-scope"));
+            return OrderSummary.FromHtmlTable(table);
         }
 
-        public decimal GetProductPrice(string expectedOnlyProduct)
+        public decimal GetProductPrice(string productName)
         {
-            throw new NotImplementedException();
+            var product = FindProduct(productName);
+            return product.Price;
         }
 
-        private IWebElement? FindProduct(string name)
+        private Product FindProduct(string name)
         {
-            var itemHeaders = Driver.FindElements(By.TagName("h6"));
-            // Contains name, because the name also has extras such as size (S/M/L/..) and color (Silver, Bronze...)
-            var itemHeader = itemHeaders.FirstOrDefault(ih => ih.Text.Contains(name));
-            // parent(td), parent(tr)
-            var itemLine = itemHeader?.GetParent().GetParent();
+            var productsHtmlTable = Driver.FindTableUsingBody(By.CssSelector(".table.table-striped.cart-items"));
+            var productsTable = new ProductsTable(productsHtmlTable);
 
-            return itemLine;
+            return productsTable.FindProduct(name);
         }
 
-        private int FindProductQuantity(IWebElement? productElement)
+        private IWebElement FindProductWebElement(string name)
         {
-            var quantityElement = FindProductQuantityElement(productElement);
-            var quantityValue = quantityElement?.GetAttribute("value");
+            var productsHtmlTable = Driver.FindTableUsingBody(By.CssSelector(".table.table-striped.cart-items"));
+            var productsTable = new ProductsTable(productsHtmlTable);
 
-            return string.IsNullOrWhiteSpace(quantityValue) ? 0 : int.Parse(quantityValue);
+            return productsTable.FindProductWebElement(name);
         }
 
         private IWebElement FindButton(string text)
@@ -140,7 +119,5 @@ namespace SimplCommerce.AcceptanceTests.Pages
         private IWebElement? FindProductQuantityElement(IWebElement? productElement)
             => productElement?.FindElement(
                 By.CssSelector(".quantity-field.ng-pristine.ng-untouched.ng-valid.ng-not-empty"));
-
-        public record OrderSummary(decimal Subtotal, decimal Discount, decimal OrderTotal);
     }
 }
