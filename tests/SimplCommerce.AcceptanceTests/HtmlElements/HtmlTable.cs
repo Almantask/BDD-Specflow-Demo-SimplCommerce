@@ -44,11 +44,12 @@ namespace SimplCommerce.AcceptanceTests.HtmlElements
         /// <typeparam name="T">Type to which to convert element value.</typeparam>
         /// <param name="row">tr of html table.</param>
         /// <param name="column">td of html table.</param>
+        /// <param name="sanitize">Function applied during value extraction.</param>
         /// <returns></returns>
         public T? GetValueAt<T>(int row, int column, Func<string, string>? sanitize = null)
         {
             var element = GetElementAt(row, column);
-            return element.Text.ConvertTo<T>();
+            return element.Text.ConvertTo<T>(sanitize);
         }
 
         /// <summary>
