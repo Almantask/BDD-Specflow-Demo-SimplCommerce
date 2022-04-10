@@ -27,11 +27,11 @@ namespace SimplCommerce.AcceptanceTests.HtmlElements
         /// <param name="row">tr of html table.</param>
         /// <param name="column">td of html table.</param>
         /// <returns></returns>
-        public T GetValueOfElementAt<T>(int row, int column)
+        public T? GetValuetAt<T>(int row, int column, Func<string, string>? sanitize = null)
         {
             var element = GetElementAt(row, column);
-            var value = element.Text;
-            return (T)Convert.ChangeType(value, typeof(T));
+            var value = sanitize?.Invoke(element.Text);
+            return (T)Convert.ChangeType(value, typeof(T))!;
         }
 
         /// <summary>

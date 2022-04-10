@@ -84,12 +84,21 @@ namespace SimplCommerce.AcceptanceTests.Pages
         public OrderSummary GetOrderSummary()
         {
             var table = Driver.FindTable(By.CssSelector(".order-summary.ng-scope"));
-            var subtotal = table.GetValueOfElementAt<decimal>(1, 2);
-            var discount = table.GetValueOfElementAt<decimal>(2, 2);
-            var orderTotal = table.GetValueOfElementAt<decimal>(3, 2);
+
+            var subtotal = GetMoneyAtRow(1);
+            var discount = GetMoneyAtRow(2);
+            var orderTotal = GetMoneyAtRow(3);
             var orderSummary = new OrderSummary(subtotal, discount, orderTotal);
 
             return orderSummary;
+
+            decimal GetMoneyAtRow(int row)
+            {
+                const int priceColumn = 2;
+                return table.GetValuetAt<decimal>(row, priceColumn, Sanitize);
+
+                string Sanitize(string money) => money.Replace("$", "");
+            }
         }
 
         public decimal GetProductPrice(string expectedOnlyProduct)

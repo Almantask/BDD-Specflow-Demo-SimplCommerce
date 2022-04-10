@@ -36,9 +36,11 @@ namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
             currentOrderSummary.Should().BeEquivalentTo(expectedOrderSummary);
         }
 
-        [BeforeScenario(OrderSummaryTag)]
+        [BeforeStep(OrderSummaryTag)]
         public void SetInitialOrderSummary()
         {
+            if (_context.StepContext.StepInfo.Text != "Ausra sets product quantity") return;
+
             _initialOrderSummary = _page.GetOrderSummary();
         }
 
