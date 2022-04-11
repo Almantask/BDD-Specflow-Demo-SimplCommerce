@@ -1,11 +1,8 @@
-﻿using OpenQA.Selenium;
+﻿using System.Diagnostics.CodeAnalysis;
+using OpenQA.Selenium;
 using SimplCommerce.AcceptanceTests.Pages.ShoppingCart;
 using static SimplCommerce.AcceptanceTests.Steps.ShoppingCart.ShoppingCartTestContext;
 using static SimplCommerce.AcceptanceTests.TestsSetup;
-
-// Not an issue, the variable is set in the hook [BeforeScenario].
-// It is run before the other steps.
-#pragma warning disable CS8618
 
 namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
 {
@@ -17,6 +14,7 @@ namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
 
         private OrderSummary _initialOrderSummary;
 
+        [SuppressMessage("Design", "CS8618", Justification = "Initialized in static hook before all tests.")]
         public TotalsDisplaySteps(ScenarioContext context)
         {
             _page = new ShoppingCartPage(Driver);

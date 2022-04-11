@@ -1,8 +1,6 @@
-﻿using OpenQA.Selenium;
+﻿using System.Diagnostics.CodeAnalysis;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-
-// The driver is initialized by a static hook.
-#pragma warning disable CS8618
 
 namespace SimplCommerce.AcceptanceTests
 {
@@ -13,6 +11,7 @@ namespace SimplCommerce.AcceptanceTests
         /// A static driver is needed because SpecFlow does not support a global context DI.
         /// It only supports it at a Scenario level.
         /// </summary>
+        [SuppressMessage("Design", "CS8618", Justification = "Initialized in static hook before all tests.")]
         public static IWebDriver Driver { get; private set; }
 
         // TODO: Move to appSettings.json.
