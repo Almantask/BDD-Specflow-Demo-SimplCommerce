@@ -15,7 +15,7 @@ public class ProductPage : BasePage
 
     public ProductPage NavigateTo()
     {
-        Driver.Navigate().GoToUrl(Url);
+        NavigateTo(Url);
         return this;
     }
 

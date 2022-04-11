@@ -10,11 +10,6 @@ namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart;
 // And use StaleElementAccess for retries.
 public static class ProductWebElement
 {
-    public static string? FindName(IWebElement? productElement)
-        => productElement
-            ?.FindElement(By.XPath("./td[2]/h6"))
-            ?.Text ?? null;
-
     public static decimal FindPrice(IWebElement? productElement)
         => productElement
             ?.FindElement(By.XPath("./td[3]"))

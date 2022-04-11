@@ -6,38 +6,32 @@ namespace SimplCommerce.AcceptanceTests.Extensions
 {
     public static class IWebDriverExtensions
     {
-        public static bool TryFindElement(this IWebDriver driver, By by, out IWebElement? result)
+        public static IWebElement? FindElementOrDefault(this IWebDriver driver, By by, params By[] nestedBys)
         {
             try
             {
-                result = driver.FindElement(by);
-                return true;
+                var element = driver.FindElement(by);
+                foreach (var nestedBy in nestedBys)
+                {
+                    element = element.FindElement(nestedBy);
+                }
+
+                return element;
             }
             catch (NoSuchElementException)
             {
-                result = null;
-                return false;
+                return null;
             }
         }
 
         /// <summary>
-        /// Find element under which there is table
+        /// Find element under which there is table.
+        /// And then convert that to an HtmlTable.
         /// </summary>
-        /// <returns></returns>
-        public static HtmlTable FindTableUsingWrapper(this IWebDriver driver, By by)
+        public static HtmlTable FindTable(this IWebDriver driver, By by)
         {
             var tableWrapper = driver.FindElement(by);
-
-            return HtmlTable.FromWrapperElement(tableWrapper);
-        }
-
-        /// <summary>
-        /// Find table element itself.
-        /// </summary>
-        public static HtmlTable FindTableUsingBody(this IWebDriver driver, By by)
-        {
-            var tableElement = StaleElementAccessor.TryFind(() => driver.FindElement(by));
-            return HtmlTable.FromTableElement(tableElement!);
+            return HtmlTable.FromWebElement(tableWrapper);
         }
     }
 }

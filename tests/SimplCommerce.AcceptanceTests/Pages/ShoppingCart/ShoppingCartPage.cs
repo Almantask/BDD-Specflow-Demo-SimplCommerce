@@ -1,6 +1,5 @@
 ﻿using OpenQA.Selenium;
 using SimplCommerce.AcceptanceTests.Extensions;
-using SimplCommerce.AcceptanceTests.Steps.ShoppingCart;
 using SimplCommerce.AcceptanceTests.Utils;
 
 namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart
@@ -15,15 +14,12 @@ namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart
 
         public ShoppingCartPage NavigateTo()
         {
-            Driver.Navigate().GoToUrl(Url);
+            NavigateTo(Url);
             return this;
         }
 
         public int GetProductQuantity(string productName)
             => StaleElementAccessor.TryFind(() => FindProductWebElement(productName), ProductWebElement.FindQuantity);
-
-        public string? GetProductName(string productName)
-            => StaleElementAccessor.TryFind(() => FindProductWebElement(productName), ProductWebElement.FindName);
 
         public decimal GetProductPrice(string productName)
             => StaleElementAccessor.TryFind(() => FindProductWebElement(productName), ProductWebElement.FindPrice);
@@ -77,7 +73,7 @@ namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart
 
         public OrderSummary GetOrderSummary()
         {
-            var table = Driver.FindTableUsingWrapper(By.CssSelector(".order-summary.ng-scope"));
+            var table = Driver.FindTable(By.CssSelector(".order-summary.ng-scope"));
             return OrderSummary.FromHtmlTable(table);
         }
 
@@ -96,19 +92,8 @@ namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart
         }
 
         private IWebElement? FindProductWebElement(string productName)
-        {
-            try
-            {
-                return Driver
-                    .FindElement(By.CssSelector(".table.table-striped.cart-items"))
-                    .FindElement(By.XPath($"./tbody/tr/td[2]//h6[contains(text(),'{productName}')]/../.."));
-            }
-            catch (NoSuchElementException)
-            {
-                // When empty table.
-                return null;
-            }
-        }
-
+            => Driver.FindElementOrDefault(
+                By.CssSelector(".table.table-striped.cart-items"),
+                By.XPath($"./tbody/tr/td[2]//h6[contains(text(),'{productName}')]/../.."));
     }
 }

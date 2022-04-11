@@ -13,18 +13,9 @@ namespace SimplCommerce.AcceptanceTests.HtmlElements
         /// <summary>
         /// Initialize table from a wrapping element.
         /// </summary>
-        public static HtmlTable FromWrapperElement(IWebElement wrapperElement)
+        public static HtmlTable FromWebElement(IWebElement wrapperElement)
         {
             var body = wrapperElement.FindElement(By.XPath(@"./table/tbody"));
-            return new HtmlTable(body);
-        }
-
-        /// <summary>
-        /// Initialize table from table element
-        /// </summary>
-        public static HtmlTable FromTableElement(IWebElement tableElement)
-        {
-            var body = tableElement.FindElement(By.XPath(@"./tbody"));
             return new HtmlTable(body);
         }
 

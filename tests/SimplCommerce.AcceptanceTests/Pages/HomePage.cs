@@ -12,7 +12,7 @@ namespace SimplCommerce.AcceptanceTests.Pages
 
         public HomePage NavigateTo()
         {
-            Driver.Navigate().GoToUrl(Url);
+            NavigateTo(Url);
             return this;
         }
 

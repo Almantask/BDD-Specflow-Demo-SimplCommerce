@@ -91,7 +91,7 @@ namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
 
             // Wait just a little for a model bind to complete and page refresh complete.
             // Otherwise, old values might be picked up.
-            Thread.Sleep(100);
+            Thread.Sleep(200);
             var quantity = _shoppingCartPage.GetProductQuantity(ExpectedOnlyProduct);
             _context.SetInitialProductQuantity(quantity);
         }
