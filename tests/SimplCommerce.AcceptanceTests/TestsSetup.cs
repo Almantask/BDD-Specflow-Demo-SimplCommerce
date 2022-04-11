@@ -25,6 +25,8 @@ namespace SimplCommerce.AcceptanceTests
             /// Retrying a few times seems to help.
             /// </summary>
             public const int MaxTries = 5;
+
+            public const string RootUrl = @"https://localhost:44388/";
         }
 
         [BeforeTestRun]

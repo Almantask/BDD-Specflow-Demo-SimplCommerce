@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using static SimplCommerce.AcceptanceTests.TestsSetup.Config;
 
 namespace SimplCommerce.AcceptanceTests.Pages
 {
@@ -11,11 +12,11 @@ namespace SimplCommerce.AcceptanceTests.Pages
             Driver = driver;
         }
 
-        protected void NavigateTo(string url)
+        protected void NavigateTo(string relativeUrl)
         {
-            if (Driver.Url == url) return;
+            if (Driver.Url == relativeUrl) return;
 
-            Driver.Navigate().GoToUrl(url);
+            Driver.Navigate().GoToUrl(RootUrl + relativeUrl);
         }
     }
 }

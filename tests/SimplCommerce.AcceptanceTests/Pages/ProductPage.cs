@@ -9,8 +9,7 @@ public class ProductPage : BasePage
 
     public ProductPage(IWebDriver driver, string product) : base(driver)
     {
-        var sanitizedProduct = product.Replace(" ", "-").ToLower();
-        Url = $@"https://localhost:44388/{sanitizedProduct}";
+        Url = product.Replace(" ", "-").ToLower();
     }
 
     public ProductPage NavigateTo()

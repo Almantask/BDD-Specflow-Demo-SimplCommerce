@@ -4,7 +4,7 @@ namespace SimplCommerce.AcceptanceTests.Pages
 {
     public class HomePage : BasePage
     {
-        private const string Url = "https://localhost:44388/";
+        private const string Url = "";
 
         public HomePage(IWebDriver driver) : base(driver)
         {

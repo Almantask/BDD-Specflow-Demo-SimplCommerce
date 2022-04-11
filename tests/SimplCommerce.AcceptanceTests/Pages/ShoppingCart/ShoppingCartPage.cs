@@ -6,7 +6,7 @@ namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart
 {
     public class ShoppingCartPage : BasePage
     {
-        private const string Url = "https://localhost:44388/cart";
+        private const string Url = "cart";
 
         public ShoppingCartPage(IWebDriver driver) : base(driver)
         {
