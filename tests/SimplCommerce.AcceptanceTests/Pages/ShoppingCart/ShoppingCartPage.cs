@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using SimplCommerce.AcceptanceTests.Extensions;
+using SimplCommerce.AcceptanceTests.Steps.ShoppingCart;
 using SimplCommerce.AcceptanceTests.Utils;
 
 namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart
@@ -19,7 +20,13 @@ namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart
         }
 
         public int GetProductQuantity(string productName)
-            => FindProduct(productName).Quantity;
+            => StaleElementAccessor.TryFind(() => FindProductWebElement(productName), ProductWebElement.FindQuantity);
+
+        public string? GetProductName(string productName)
+            => StaleElementAccessor.TryFind(() => FindProductWebElement(productName), ProductWebElement.FindName);
+
+        public decimal GetProductPrice(string productName)
+            => StaleElementAccessor.TryFind(() => FindProductWebElement(productName), ProductWebElement.FindPrice);
 
         public ShoppingCartPage DecrementQuantity(string productName)
         {
@@ -35,33 +42,33 @@ namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart
 
         public ShoppingCartPage SetProductQuantityTo(string productName, string quantity)
         {
-            var product = FindProductWebElement(productName);
-            var productQuantity = FindProductQuantityElement(product);
-            productQuantity?.SendKeys(quantity);
+            StaleElementAccessor.Try(
+                () =>
+                {
+                    var product = FindProductWebElement(productName);
+                    var productQuantityTextBox = ProductWebElement.FindQuantityTextBox(product!);
+                    return productQuantityTextBox;
+                }, (productQuantityTextBox) => productQuantityTextBox?.SendKeys(quantity));
 
             return this;
         }
 
         public ShoppingCartPage SetProductQuantityTo(string productName, int quantity)
         {
-            var productWebElement = FindProductWebElement(productName);
-            var product = Product.FromWebElement(productWebElement);
-
-            var difference = quantity - product.Quantity;
+            var difference = quantity - GetProductQuantity(productName);
             if (difference > 0)
             {
                 for (int i = 0; i < difference; i++)
                 {
-                    var incrementQuantityButton = FindButtonOnAProduct(productWebElement, "+");
-                    incrementQuantityButton.Try(e => e.Click());
+
+                    ClickButtonOnAProduct(productName, "+");
                 }
             }
             else
             {
                 for (int i = difference; i < 0; i++)
                 {
-                    var decrementQuantityButton = FindButtonOnAProduct(productWebElement, "-");
-                    decrementQuantityButton.Try(e => e.Click());
+                    ClickButtonOnAProduct(productName, "-");
                 }
             }
 
@@ -74,49 +81,34 @@ namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart
             return OrderSummary.FromHtmlTable(table);
         }
 
-        public decimal GetProductPrice(string productName)
-        {
-            var product = FindProduct(productName);
-            return product.Price;
-        }
-
-        private Product FindProduct(string name)
-        {
-            var productsHtmlTable = Driver.FindTableUsingBody(By.CssSelector(".table.table-striped.cart-items"));
-            var productsTable = new ProductsTable(productsHtmlTable);
-
-            return productsTable.FindProduct(name);
-        }
-
-        private IWebElement FindProductWebElement(string productName)
-        {
-            var productsHtmlTable = Driver.FindTableUsingBody(By.CssSelector(".table.table-striped.cart-items"));
-            var productsTable = new ProductsTable(productsHtmlTable);
-
-            return productsTable.FindProductWebElement(productName);
-        }
-
-        private IWebElement FindButtonOnAProduct(string productName, string text)
-        {
-            var product = FindProductWebElement(productName);
-            return product.FindElement(By.XPath($"//button[text()='{text}']"));
-        }
-
-        private IWebElement FindButtonOnAProduct(IWebElement productWebElement, string text)
-        {
-            return productWebElement.FindElement(By.XPath($"//button[text()='{text}']"));
-        }
-
-        private IWebElement? FindProductQuantityElement(IWebElement? productElement)
-            => productElement?.FindElement(
-                By.CssSelector(".quantity-field.ng-pristine.ng-untouched.ng-valid.ng-not-empty"));
-
         private void ClickButtonOnAProduct(string productName, string button)
         {
             StaleElementAccessor.Try(
                 () => FindButtonOnAProduct(productName, button),
-                decrementQuantityButton => decrementQuantityButton.Click()
+                changeQuantityBy1Button => changeQuantityBy1Button!.Click()
             );
         }
+
+        private IWebElement FindButtonOnAProduct(string productName, string button)
+        {
+            var product = FindProductWebElement(productName);
+            return ProductWebElement.FindButton(product!, button);
+        }
+
+        private IWebElement? FindProductWebElement(string productName)
+        {
+            try
+            {
+                return Driver
+                    .FindElement(By.CssSelector(".table.table-striped.cart-items"))
+                    .FindElement(By.XPath($"./tbody/tr/td[2]//h6[contains(text(),'{productName}')]/../.."));
+            }
+            catch (NoSuchElementException)
+            {
+                // When empty table.
+                return null;
+            }
+        }
+
     }
 }

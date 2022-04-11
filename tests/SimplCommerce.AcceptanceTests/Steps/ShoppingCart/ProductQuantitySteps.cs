@@ -76,7 +76,6 @@ namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
         /// <summary>
         /// Verifies that original product quantity compared to original meets specified condition.
         /// </summary>
-        /// <param name="condition">original, current</param>
         private void ProductQuantityShouldBe(Action<int, int> assertion)
         {
             var originalQuantity = _context.GetInitialProductQuantity();
@@ -90,6 +89,9 @@ namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
         {
             if (!_context.StepContext.StepInfo.Text.Contains("product quantity is")) return;
 
+            // Wait just a little for a model bind to complete and page refresh complete.
+            // Otherwise, old values might be picked up.
+            Thread.Sleep(100);
             var quantity = _shoppingCartPage.GetProductQuantity(ExpectedOnlyProduct);
             _context.SetInitialProductQuantity(quantity);
         }

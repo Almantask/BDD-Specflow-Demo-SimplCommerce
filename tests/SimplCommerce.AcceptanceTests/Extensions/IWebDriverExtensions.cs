@@ -37,7 +37,7 @@ namespace SimplCommerce.AcceptanceTests.Extensions
         public static HtmlTable FindTableUsingBody(this IWebDriver driver, By by)
         {
             var tableElement = StaleElementAccessor.TryFind(() => driver.FindElement(by));
-            return HtmlTable.FromTableElement(tableElement);
+            return HtmlTable.FromTableElement(tableElement!);
         }
     }
 }

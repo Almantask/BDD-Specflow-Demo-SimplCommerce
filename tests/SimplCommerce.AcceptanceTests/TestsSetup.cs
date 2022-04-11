@@ -1,6 +1,9 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
+// The driver is initialized by a static hook.
+#pragma warning disable CS8618
+
 namespace SimplCommerce.AcceptanceTests
 {
     [Binding]

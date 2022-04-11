@@ -10,11 +10,22 @@ namespace SimplCommerce.AcceptanceTests.Utils
     public static class StaleElementAccessor
     {
         /// <summary>
-        /// Try getting an element and then interacting with it.
+        /// Keep on trying to get an element (due to page refreshes).
         /// </summary>
-        /// <returns>The same element that was found.</returns>
+        public static IWebElement? TryFind(Func<IWebElement?> findElement, int maxTries = TestsSetup.Config.MaxTries)
+        {
+            // Find and interact.
+            return TryFind(findElement,
+                (element) => element,
+                maxTries);
+        }
+
+        /// <summary>
+        /// Keep on trying to get an element (due to page refreshes).
+        /// And then interact with it.
+        /// </summary>
         public static void Try(
-            Func<IWebElement> findElement,
+            Func<IWebElement?> findElement,
             Action<IWebElement?> action,
             int maxTries = TestsSetup.Config.MaxTries)
         {
@@ -29,40 +40,12 @@ namespace SimplCommerce.AcceptanceTests.Utils
         }
 
         /// <summary>
-        /// Try getting an element and then selecting something from it.
-        /// </summary>
-        /// <returns>Element or parts of it after selector is applied to it.</returns>
-        public static IWebElement TryFind(
-            Func<IWebElement> findElement,
-            int maxTries = TestsSetup.Config.MaxTries)
-        {
-            while (maxTries > 0)
-            {
-                try
-                {
-                    return findElement();
-                }
-                catch (StaleElementReferenceException ex)
-                {
-                    maxTries--;
-                }
-            }
-
-            if (maxTries == 0)
-            {
-                Assert.Fail($"Failed to interact with WebElement.");
-            }
-
-            // Should never go here.
-            return default;
-        }
-
-        /// <summary>
-        /// Try getting an element and then selecting something from it.
+        /// Keep on trying to get an element (due to page refreshes).
+        /// And then apply a selector to get something inside it.
         /// </summary>
         /// <returns>Element or parts of it after selector is applied to it.</returns>
         public static T? TryFind<T>(
-            Func<IWebElement> findElement,
+            Func<IWebElement?> findElement,
             Func<IWebElement?, T> selector,
             int maxTries = TestsSetup.Config.MaxTries)
         {
@@ -73,7 +56,7 @@ namespace SimplCommerce.AcceptanceTests.Utils
                     var element = findElement();
                     return selector(element);
                 }
-                catch (StaleElementReferenceException ex)
+                catch (StaleElementReferenceException)
                 {
                     maxTries--;
                 }
