@@ -7,7 +7,7 @@ namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
     [Binding]
     public class ShoppingCartProductsSteps
     {
-        private ScenarioContext _context;
+        private readonly ScenarioContext _context;
         private readonly NavigationBar _navigationBar;
 
         public ShoppingCartProductsSteps(ScenarioContext context)

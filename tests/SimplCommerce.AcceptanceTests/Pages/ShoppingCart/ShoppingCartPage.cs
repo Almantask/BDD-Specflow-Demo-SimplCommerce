@@ -5,6 +5,12 @@ namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart
 {
     public class ShoppingCartPage : BasePage
     {
+        private static class Buttons
+        {
+            public const string Increment = "+";
+            public const string Decrement = "-";
+        }
+
         private const string Url = "cart";
 
         public ShoppingCartPage(IWebDriver driver) : base(driver)
@@ -25,13 +31,13 @@ namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart
 
         public ShoppingCartPage DecrementQuantity(string productName)
         {
-            ClickButtonOnAProduct(productName, "-");
+            ClickButtonOnAProduct(productName, Buttons.Decrement);
             return this;
         }
 
         public ShoppingCartPage IncrementQuantity(string productName)
         {
-            ClickButtonOnAProduct(productName, "+");
+            ClickButtonOnAProduct(productName, Buttons.Increment);
             return this;
         }
 
@@ -56,14 +62,14 @@ namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart
                 for (int i = 0; i < difference; i++)
                 {
 
-                    ClickButtonOnAProduct(productName, "+");
+                    ClickButtonOnAProduct(productName, Buttons.Increment);
                 }
             }
             else
             {
                 for (int i = difference; i < 0; i++)
                 {
-                    ClickButtonOnAProduct(productName, "-");
+                    ClickButtonOnAProduct(productName, Buttons.Decrement);
                 }
             }
 
