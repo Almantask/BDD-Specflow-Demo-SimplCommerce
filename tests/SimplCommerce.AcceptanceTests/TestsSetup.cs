@@ -18,11 +18,11 @@ namespace SimplCommerce.AcceptanceTests
             public const string ConnectionString = $"Server=.\\SQLEXPRESS;Database=SimplCommerce;Trusted_Connection=True;";
 
             /// <summary>
-            /// Regardless of page loading, some elements don't appear fast enough.
+            /// Regardless of page loading, some elements aren't yet attached to page.
             /// Therefore when interacting with them, you will get StaleElementReferenceException.
             /// Retrying a few times seems to help.
             /// </summary>
-            public const int MaxRetries = 5;
+            public const int MaxTries = 5;
         }
 
         [BeforeTestRun]

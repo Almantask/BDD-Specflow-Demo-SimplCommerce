@@ -16,7 +16,7 @@ namespace SimplCommerce.AcceptanceTests.Utils
         public static void Try(
             Func<IWebElement> findElement,
             Action<IWebElement?> action,
-            int maxTries = TestsSetup.Config.MaxRetries)
+            int maxTries = TestsSetup.Config.MaxTries)
         {
             // Find and interact.
             TryFind(findElement,
@@ -34,7 +34,7 @@ namespace SimplCommerce.AcceptanceTests.Utils
         /// <returns>Element or parts of it after selector is applied to it.</returns>
         public static IWebElement TryFind(
             Func<IWebElement> findElement,
-            int maxTries = TestsSetup.Config.MaxRetries)
+            int maxTries = TestsSetup.Config.MaxTries)
         {
             while (maxTries > 0)
             {
@@ -64,7 +64,7 @@ namespace SimplCommerce.AcceptanceTests.Utils
         public static T? TryFind<T>(
             Func<IWebElement> findElement,
             Func<IWebElement?, T> selector,
-            int maxTries = TestsSetup.Config.MaxRetries)
+            int maxTries = TestsSetup.Config.MaxTries)
         {
             while (maxTries > 0)
             {

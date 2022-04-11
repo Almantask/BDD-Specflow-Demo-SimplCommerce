@@ -1,6 +1,4 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
 using SimplCommerce.AcceptanceTests.Extensions;
 using SimplCommerce.AcceptanceTests.Utils;
 
@@ -23,30 +21,30 @@ namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart
         public int GetProductQuantity(string productName)
             => FindProduct(productName).Quantity;
 
-        public ShoppingCartPage DecrementQuantity(string expectedOnlyProduct)
+        public ShoppingCartPage DecrementQuantity(string productName)
         {
-            ClickButtonOnAProduct(expectedOnlyProduct, "-");
+            ClickButtonOnAProduct(productName, "-");
             return this;
         }
 
-        public ShoppingCartPage IncrementQuantity(string expectedOnlyProduct)
+        public ShoppingCartPage IncrementQuantity(string productName)
         {
-            ClickButtonOnAProduct(expectedOnlyProduct, "+");
+            ClickButtonOnAProduct(productName, "+");
             return this;
         }
 
-        public ShoppingCartPage SetProductQuantityTo(string name, string quantity)
+        public ShoppingCartPage SetProductQuantityTo(string productName, string quantity)
         {
-            var product = FindProductWebElement(name);
+            var product = FindProductWebElement(productName);
             var productQuantity = FindProductQuantityElement(product);
             productQuantity?.SendKeys(quantity);
 
             return this;
         }
 
-        public ShoppingCartPage SetProductQuantityTo(string name, int quantity)
+        public ShoppingCartPage SetProductQuantityTo(string productName, int quantity)
         {
-            var productWebElement = FindProductWebElement(name);
+            var productWebElement = FindProductWebElement(productName);
             var product = Product.FromWebElement(productWebElement);
 
             var difference = quantity - product.Quantity;
@@ -113,10 +111,10 @@ namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart
             => productElement?.FindElement(
                 By.CssSelector(".quantity-field.ng-pristine.ng-untouched.ng-valid.ng-not-empty"));
 
-        private void ClickButtonOnAProduct(string product, string button)
+        private void ClickButtonOnAProduct(string productName, string button)
         {
             StaleElementAccessor.Try(
-                () => FindButtonOnAProduct(product, button),
+                () => FindButtonOnAProduct(productName, button),
                 decrementQuantityButton => decrementQuantityButton.Click()
             );
         }
