@@ -5,7 +5,7 @@ namespace SimplCommerce.AcceptanceTests.Extensions
 {
     public static class IWebElementExtensions
     {
-        public static bool TryFindElement(this IWebElement element, By by, out IWebElement? result)
+        public static bool FindElementOrDefault(this IWebElement element, By by, out IWebElement? result)
         {
             try
             {
