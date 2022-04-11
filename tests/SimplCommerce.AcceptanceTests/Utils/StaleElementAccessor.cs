@@ -1,7 +1,4 @@
-﻿using NUnit.Framework;
-using OpenQA.Selenium;
-
-namespace SimplCommerce.AcceptanceTests.Utils
+﻿namespace SimplCommerce.AcceptanceTests.Utils
 {
     /// <summary>
     /// A retry might be required.

@@ -1,5 +1,4 @@
-﻿using OpenQA.Selenium;
-using static SimplCommerce.AcceptanceTests.TestsSetup.Config;
+﻿using static SimplCommerce.AcceptanceTests.TestsSetup.Config;
 
 namespace SimplCommerce.AcceptanceTests.Pages
 {

@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using OpenQA.Selenium;
 using SimplCommerce.AcceptanceTests.Pages.ShoppingCart;
 using static SimplCommerce.AcceptanceTests.Steps.ShoppingCart.ShoppingCartTestContext;
 using static SimplCommerce.AcceptanceTests.TestsSetup;

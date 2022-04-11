@@ -1,5 +1,4 @@
-﻿using OpenQA.Selenium;
-using SimplCommerce.AcceptanceTests.Pages;
+﻿using SimplCommerce.AcceptanceTests.Pages;
 using static SimplCommerce.AcceptanceTests.Steps.ShoppingCart.ShoppingCartTestContext;
 using static SimplCommerce.AcceptanceTests.TestsSetup;
 

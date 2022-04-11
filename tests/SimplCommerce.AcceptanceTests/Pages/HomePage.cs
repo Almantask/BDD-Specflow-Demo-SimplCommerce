@@ -1,6 +1,4 @@
-﻿using OpenQA.Selenium;
-
-namespace SimplCommerce.AcceptanceTests.Pages
+﻿namespace SimplCommerce.AcceptanceTests.Pages
 {
     public class HomePage : BasePage
     {

@@ -1,6 +1,4 @@
-﻿using OpenQA.Selenium;
-using SimplCommerce.AcceptanceTests.HtmlElements;
-using SimplCommerce.AcceptanceTests.Utils;
+﻿using SimplCommerce.AcceptanceTests.HtmlElements;
 
 namespace SimplCommerce.AcceptanceTests.Extensions
 {

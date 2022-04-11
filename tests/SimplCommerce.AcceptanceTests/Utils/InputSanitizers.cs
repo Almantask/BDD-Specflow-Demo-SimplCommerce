@@ -1,4 +1,4 @@
-﻿namespace SimplCommerce.AcceptanceTests.Extensions
+﻿namespace SimplCommerce.AcceptanceTests.Utils
 {
     public class InputSanitizers
     {

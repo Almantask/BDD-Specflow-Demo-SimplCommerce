@@ -1,5 +1,4 @@
-﻿using OpenQA.Selenium;
-using SimplCommerce.AcceptanceTests.Extensions;
+﻿using SimplCommerce.AcceptanceTests.Extensions;
 using SimplCommerce.AcceptanceTests.Utils;
 
 namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart

@@ -1,5 +1,5 @@
-﻿using SimplCommerce.AcceptanceTests.Extensions;
-using SimplCommerce.AcceptanceTests.HtmlElements;
+﻿using SimplCommerce.AcceptanceTests.HtmlElements;
+using SimplCommerce.AcceptanceTests.Utils;
 
 namespace SimplCommerce.AcceptanceTests.Pages.ShoppingCart;
 
