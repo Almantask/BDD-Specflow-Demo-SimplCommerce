@@ -1,6 +1,6 @@
 ﻿namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
 {
-    public static class ShoppingCartTestContext
+    public static class TestContext
     {
         public const string ShoppingCartTestTag = "ShoppingCart";
         public const string ExpectedOnlyProduct = "Square Neck Back";

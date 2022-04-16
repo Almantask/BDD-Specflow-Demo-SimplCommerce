@@ -1,16 +1,16 @@
 ﻿using SimplCommerce.AcceptanceTests.Pages;
-using static SimplCommerce.AcceptanceTests.Steps.ShoppingCart.ShoppingCartTestContext;
+using static SimplCommerce.AcceptanceTests.Steps.ShoppingCart.TestContext;
 using static SimplCommerce.AcceptanceTests.TestsSetup;
 
 namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
 {
     [Binding]
-    public class ShoppingCartProductsSteps
+    public class AddProductToCartSteps
     {
         private readonly ScenarioContext _context;
         private readonly NavigationBar _navigationBar;
 
-        public ShoppingCartProductsSteps(ScenarioContext context)
+        public AddProductToCartSteps(ScenarioContext context)
         {
             _navigationBar = new NavigationBar(Driver);
             _context = context;

@@ -1,7 +1,7 @@
 ﻿using SimplCommerce.AcceptanceTests.Db;
-using static SimplCommerce.AcceptanceTests.Steps.ShoppingCart.ShoppingCartTestContext;
+using static SimplCommerce.AcceptanceTests.Steps.ShoppingCart.TestContext;
 
-namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
+namespace SimplCommerce.AcceptanceTests.Steps.Inventory
 {
     [Binding]
     public class StockSteps

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using SimplCommerce.AcceptanceTests.Pages.ShoppingCart;
-using static SimplCommerce.AcceptanceTests.Steps.ShoppingCart.ShoppingCartTestContext;
+using static SimplCommerce.AcceptanceTests.Steps.ShoppingCart.TestContext;
 using static SimplCommerce.AcceptanceTests.TestsSetup;
 
 namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart

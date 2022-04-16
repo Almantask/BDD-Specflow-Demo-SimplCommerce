@@ -1,16 +1,16 @@
 ﻿using SimplCommerce.AcceptanceTests.Pages.ShoppingCart;
-using static SimplCommerce.AcceptanceTests.Steps.ShoppingCart.ShoppingCartTestContext;
+using static SimplCommerce.AcceptanceTests.Steps.ShoppingCart.TestContext;
 using static SimplCommerce.AcceptanceTests.TestsSetup;
 
 namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
 {
     [Binding]
-    public class ProductQuantitySteps
+    public class ChangeProductQuantitySteps
     {
         private readonly ScenarioContext _context;
         private readonly ShoppingCartPage _shoppingCartPage;
 
-        public ProductQuantitySteps(ScenarioContext context)
+        public ChangeProductQuantitySteps(ScenarioContext context)
         {
             _context = context;
             _shoppingCartPage = new ShoppingCartPage(Driver);
@@ -76,12 +76,12 @@ namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
         /// <summary>
         /// Verifies that original product quantity compared to original meets specified condition.
         /// </summary>
-        private void ProductQuantityShouldBe(Action<int, int> assertion)
+        private void ProductQuantityShouldBe(Action<int, int> compare)
         {
             var originalQuantity = _context.GetInitialProductQuantity();
             var currentQuantity = _shoppingCartPage.GetProductQuantity(ExpectedOnlyProduct);
 
-            assertion(originalQuantity, currentQuantity);
+            compare(originalQuantity, currentQuantity);
         }
 
         [AfterStep]
