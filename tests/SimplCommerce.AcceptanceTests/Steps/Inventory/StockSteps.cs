@@ -9,7 +9,7 @@ namespace SimplCommerce.AcceptanceTests.Steps.Inventory
         private const string StockModifiedTestsTag = "Stock";
 
         private readonly ScenarioContext _context;
-        private int _quantityOfShoppingItem;
+        private int _initialProductQuantity;
 
         public StockSteps(ScenarioContext context)
         {
@@ -20,7 +20,7 @@ namespace SimplCommerce.AcceptanceTests.Steps.Inventory
         [Given(@"not enough products in stock")]
         public void GivenNotEnoughProductsInStock()
         {
-            var quantityInStock = StockRepository.GetProductQuantityInStock(ExpectedOnlyProductFullName);
+            var quantityInStock = StockRepository.GetProductQuantityInStock(ExpectedOnlyProductName);
             var quantityInShoppingCart = _context.GetInitialProductQuantity();
             if (quantityInStock > quantityInShoppingCart)
             {
@@ -32,7 +32,7 @@ namespace SimplCommerce.AcceptanceTests.Steps.Inventory
         [Given(@"enough products in stock")]
         public void GivenEnoughProductsInStock()
         {
-            var quantityInStock = StockRepository.GetProductQuantityInStock(ExpectedOnlyProductFullName);
+            var quantityInStock = StockRepository.GetProductQuantityInStock(ExpectedOnlyProductName);
             var quantityInShoppingCart = _context.GetInitialProductQuantity();
             if (quantityInStock <= quantityInShoppingCart)
             {
@@ -43,13 +43,13 @@ namespace SimplCommerce.AcceptanceTests.Steps.Inventory
         [BeforeScenario(StockModifiedTestsTag)]
         public void SetOriginalStockQuantity()
         {
-            _quantityOfShoppingItem = StockRepository.GetProductQuantityInStock(ExpectedOnlyProductFullName);
+            _initialProductQuantity = StockRepository.GetProductQuantityInStock(ExpectedOnlyProductName);
         }
 
         [AfterScenario(StockModifiedTestsTag)]
         public void UpdateStockToOriginal()
         {
-            StockRepository.UpdateStock(ExpectedOnlyProduct, _quantityOfShoppingItem);
+            StockRepository.UpdateStock(ExpectedOnlyProduct, _initialProductQuantity);
         }
     }
 }
