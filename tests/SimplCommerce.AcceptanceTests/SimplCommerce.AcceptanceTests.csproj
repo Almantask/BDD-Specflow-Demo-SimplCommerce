@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Journeys\" />
+    <Folder Include="Features\Pseudo-examples\Journeys\" />
   </ItemGroup>
 
   <ItemGroup>

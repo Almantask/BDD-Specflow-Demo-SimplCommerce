@@ -2,7 +2,7 @@
 Feature: Change product quantity
 
 As Ausra the shopper
-I would like to be able to change quantity of shopping cart products
+I would like to change quantity of shopping cart products
 So that I can choose how many products I want to buy without going back to a shop.
 
 Background:
