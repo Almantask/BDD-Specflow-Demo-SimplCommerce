@@ -1,5 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using OpenQA.Selenium.Chrome;
+using WebDriverManager;
+using WebDriverManager.DriverConfigs.Impl;
+using WebDriverManager.Helpers;
 
 namespace SimplCommerce.AcceptanceTests
 {
@@ -42,12 +45,17 @@ namespace SimplCommerce.AcceptanceTests
 
         private static IWebDriver BuildDriver()
         {
-            var driver = new ChromeDriver();
+            var path = DownloadDriverMatchingCurrentMachineBrowser();
+            var driver = new ChromeDriver(Path.GetDirectoryName(path));
             // Wait a bit for any element to appear to factor in loading times.
             // Default wait time is 0.
             // When you need to wait for more, use WaitDriver (from Selenium.WaitExtensions NuGet)
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMilliseconds(1000);
             return driver;
         }
+
+        private static string DownloadDriverMatchingCurrentMachineBrowser()
+            => new DriverManager().SetUpDriver(new ChromeConfig(), VersionResolveStrategy.MatchingBrowser);
+
     }
 }
