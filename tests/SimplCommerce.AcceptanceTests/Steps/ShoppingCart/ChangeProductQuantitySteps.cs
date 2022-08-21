@@ -79,6 +79,9 @@ namespace SimplCommerce.AcceptanceTests.Steps.ShoppingCart
         private void ProductQuantityShouldBe(Action<int, int> compare)
         {
             var originalQuantity = _context.GetInitialProductQuantity();
+            // On some machines this still seem to happen too fast.
+            // Consider doing such delays before making final assertions.
+            Thread.Sleep(300);
             var currentQuantity = _shoppingCartPage.GetProductQuantity(ExpectedOnlyProduct);
 
             compare(originalQuantity, currentQuantity);
