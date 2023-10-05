@@ -1,40 +1,22 @@
-﻿@ignore
-Feature: GetUser
+﻿Feature: GetUser
 
-A short summary of the feature
+Get user
 
-@tag1
 Scenario: Get existing user
-    Given a client has a get user request
-    And user id is 1
-    When they send the get user request
-    Then they should get a get user response
-    And the response should have body
+    Given I have "POST" "/user/<ExistingUserId>" request
+    When I send the request
+    Then status code should be 200 
+    And the response body should be
     ```
     {
         "User": {
-            "Id": 1,
-            ...
-        },
+            "Id": <ExistingUserId>,
+	},
         ...
     }
     ```
-    And status code is 200
 
-Scenario: Get existing user2
-    Given a client has a get user request
-    And user id is 1
-    When they send the get user request
-    Then they should get a get user response
-    * with body
-    ```
-    {
-        "User": {
-            "Id": 1,
-            ...
-        },
-        ...
-    }
-    ```
-    * with status code 200
-
+    Examples:
+    | ExistingUserId | Description                          |
+    | 1              | Disabled user can still be retrieved |
+    | 2              | Enabled user                         |
